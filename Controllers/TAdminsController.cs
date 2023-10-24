@@ -12,6 +12,7 @@ namespace Admin.Controllers
     public class TAdminsController : Controller
     {
         private readonly QLBanDTContext _context;
+        
 
         public TAdminsController(QLBanDTContext context)
         {
