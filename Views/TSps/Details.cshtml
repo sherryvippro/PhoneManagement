@@ -4,7 +4,7 @@
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/LeftMenuLayout.cshtml";
 }
-
+<body>
 <h1 class="product-detail">Chi tiết sản phẩm</h1>
 
 <hr />
@@ -59,6 +59,7 @@
     <a asp-action="Edit" asp-route-id="@Model?.MaSp" class="btn btn-primary">Sửa</a> 
     <a asp-action="Index" class="btn btn-primary">Quay lại</a>
 </div>
+</body>
 <style>
     .product-detail {
         margin-top: revert-layer;
