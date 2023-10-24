@@ -1,0 +1,68 @@
+﻿@model Admin.Models.TSp
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/LeftMenuLayout.cshtml";
+}
+
+<h1 class="product-detail">Chi tiết sản phẩm</h1>
+
+<hr />
+
+<div>
+    <dl class="row">
+        <dt class = "col-sm-2">
+            Tên sản phẩm
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TenSp)
+        </dd>
+        <dt class = "col-sm-2">
+            Đơn giá nhập
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DonGiaNhap)
+        </dd>
+        <dt class = "col-sm-2">
+            Đơn giá bán
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DonGiaBan)
+        </dd>
+        <dt class = "col-sm-2">
+            Số lượng
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SoLuong)
+        </dd>
+        <dt class = "col-sm-2">
+            Ảnh
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Anh)
+        </dd>
+        <dt class = "col-sm-2">
+            Tên hãng
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MaHangNavigation.TenHang)
+        </dd>
+        <dt class = "col-sm-2">
+            Tên thể loại
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MaTlNavigation.TenTl)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.MaSp" class="btn btn-primary">Sửa</a> 
+    <a asp-action="Index" class="btn btn-primary">Quay lại</a>
+</div>
+<style>
+    .product-detail {
+        margin-top: revert-layer;
+        text-align: center;
+        font-size: 2rem;
+    }
+</style>

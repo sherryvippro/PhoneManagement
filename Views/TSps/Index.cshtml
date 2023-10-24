@@ -1,0 +1,88 @@
+﻿@model IEnumerable<Admin.Models.TSp>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/MyLayout.cshtml";
+}
+
+<h1 class="product-list">DANH MỤC SẢN PHẨM</h1>
+<hr />
+<div class="table-responsive">
+<table class="align-middle text-truncate mb-0 table table-borderless table-hover">
+    <thead>
+        <tr>
+            <th>
+                Tên sản phẩm
+            </th>
+            <th>
+                Đơn giá nhập
+            </th>
+            <th>
+               Đơn giá bán
+            </th>
+            <th>
+                Số lượng
+            </th>
+            <th>
+               Ảnh
+            </th>
+            <th>
+                Mã hãng
+            </th>
+            <th>
+                Mã thể loại
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TenSp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DonGiaNhap)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DonGiaBan)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoLuong)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Anh)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaHangNavigation.MaHang)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaTlNavigation.MaTl)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.MaSp">Sửa</a> |
+                <a asp-action="Details" asp-route-id="@item.MaSp">Chi tiết</a> |
+                <a asp-action="Delete" asp-route-id="@item.MaSp">Xóa</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</div>
+
+<hr />
+<p>
+    <a asp-action="Create" class="btn btn-primary">Thêm mới</a>
+</p>
+<p>@ViewBag.TotalProduct</p>
+<style>
+    .btn{
+        float: right;
+        margin-right: 15px;
+    }
+    .product-list{
+        margin-top: revert-layer;
+        text-align: center;
+        font-size: 2rem;
+    }
+</style>
