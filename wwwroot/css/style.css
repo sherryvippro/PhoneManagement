@@ -13585,7 +13585,8 @@ button,
             }
 
         .header-mobile-wrapper .app-header__logo .logo-src {
-            background: url(~/images/logo-inverse.png) 50% 50% no-repeat
+
+            /*background: url(~/images/logo-inverse.png) 50% 50% no-repeat*/
         }
 
 .closed-sidebar-mobile.header-mobile-open .app-sidebar-wrapper {
