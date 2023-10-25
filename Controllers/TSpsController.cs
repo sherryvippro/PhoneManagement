@@ -26,7 +26,6 @@ namespace Admin.Controllers
         {
             var qLBanDTContext = _context.TSp.Include(t => t.MaHangNavigation).Include(t => t.MaTlNavigation);
             ViewBag.TotalProduct = await _productServices.GetTotalProductAsync();
-            var test = "abc";
 
             return View(await qLBanDTContext.ToListAsync());
 
