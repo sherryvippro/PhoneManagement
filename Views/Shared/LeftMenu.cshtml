@@ -19,10 +19,11 @@
                             @* <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i> *@
                         </a>
                         <ul class="mm-show">
-                            <li><a class="mm-active" href="index.html">Sản phẩm</a></li>
-                            <li><a href="#">Thống kê</a></li>
-                            <li><a href="#">Hóa đơn nhập</a></li>
-                            <li><a href="#">Hóa đơn xuất</a></li>
+                            @* class="mm-active" *@
+                            <li><a href="@Url.Action("Index", "TSps")">Sản phẩm</a></li>
+                            <li><a href="@Url.Action("Total", "TSps")">Thống kê</a></li>
+                            <li><a href="@Url.Action("Index", "THoaDonNhaps")">Hóa đơn nhập</a></li>
+                            <li><a href="@Url.Action("Index", "THoaDonBans")">Hóa đơn xuất</a></li>
                             @* 
                             <li><a href="helpdesk-dashboard.html">Helpdesk</a></li>
                             <li><a href="monitoring-dashboard.html">Monitoring</a></li>

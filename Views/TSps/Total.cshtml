@@ -1,0 +1,147 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/MyLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-sm-12 col-md-7">
+        <div class="row">
+            <div class="col-sm-12 col-md-6">
+                <div class="card-shadow-primary mb-3 widget-chart widget-chart2 text-left card">
+                    <div class="widget-chat-wrapper-outer">
+                        <div class="widget-chart-content">
+                            <h6 class="widget-subheading">
+                                Tổng số lượng sản phẩm
+                            </h6>
+                            <div class="widget-chart-flex">
+                                <div class="widget-numbers mb-0 w-100">
+                                    <div class="widget-chart-flex">
+                                        <div class="fsize-4">
+                                            <small class="opacity-5">$</small>
+                                            @ViewBag.TotalProduct
+                                        </div>
+                                        <div class="ml-auto">
+                                            <div class="widget-title ml-auto font-size-lg font-weight-normal text-muted">
+                                                <span class="text-success pl-2">+14%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <div class="card-shadow-primary mb-3 widget-chart widget-chart2 text-left card">
+                    <div class="widget-chat-wrapper-outer">
+                        <div class="widget-chart-content">
+                            <h6 class="widget-subheading">Tổng lượng sản phẩm đã bán</h6>
+                            <div class="widget-chart-flex">
+                                <div class="widget-numbers mb-0 w-100">
+                                    <div class="widget-chart-flex">
+                                        <div class="fsize-4 text-danger">
+                                            <small class="opacity-5 text-muted">
+                                                $
+                                            </small> 4,764
+                                        </div>
+                                        <div class="ml-auto">
+                                            <div class="widget-title ml-auto font-size-lg font-weight-normal text-muted">
+                                                <span class="text-danger pl-2">
+                                                    <span class="pr-1">
+                                                        <i class="fa fa-angle-up"></i>
+                                                    </span> 8%
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <div class="card-shadow-primary mb-3 widget-chart widget-chart2 text-left card">
+                    <div class="widget-chat-wrapper-outer">
+                        <div class="widget-chart-content">
+                            <h6 class="widget-subheading">Tổng tiền nhập hàng</h6>
+                            <div class="widget-chart-flex">
+                                <div class="widget-numbers mb-0 w-100">
+                                    <div class="widget-chart-flex">
+                                        <div class="fsize-4">
+                                            <span class="text-success pr-2">
+                                                <i class="fa fa-angle-down"></i>
+                                            </span>
+                                            <small class="opacity-5">$</small> 1.5M
+                                        </div>
+                                        <div class="ml-auto">
+                                            <div class="widget-title ml-auto font-size-lg font-weight-normal text-muted">
+                                                <span class="text-success pl-2">
+                                                    <span class="pr-1">
+                                                        <i class="fa fa-angle-down"></i>
+                                                    </span> 15%
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <div class="card-shadow-primary mb-3 widget-chart widget-chart2 text-left card">
+                    <div class="widget-chat-wrapper-outer">
+                        <div class="widget-chart-content">
+                            <h6 class="widget-subheading">Doanh thu</h6>
+                            <div class="widget-chart-flex">
+                                <div class="widget-numbers mb-0 w-100">
+                                    <div class="widget-chart-flex">
+                                        <div class="fsize-4">
+                                            <small class="opacity-5">$</small> 31,564
+                                        </div>
+                                        <div class="ml-auto">
+                                            <div class="widget-title ml-auto font-size-lg font-weight-normal text-muted">
+                                                <span class="text-warning pl-2">+76%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-5">
+        <div class="mb-3 card">
+            <div class="card-body">
+                <div class="widget-chart widget-chart2 text-left p-0">
+                    <div class="widget-chat-wrapper-outer">
+                        <div class="widget-chart-content">
+                            <div class="widget-chart-flex">
+                                <div class="widget-numbers mt-0">
+                                    <div class="widget-chart-flex">
+                                        <div>
+                                            <small class="opacity-5">$</small>
+                                            <span>1000</span>
+                                        </div>
+                                        <div class="widget-title ml-2 opacity-5 font-size-lg text-muted">
+                                            Lợi nhuận
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="widget-chart-wrapper widget-chart-wrapper-lg opacity-10 m-0">
+                            <div id="dashboard-sparkline-carousel-3"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

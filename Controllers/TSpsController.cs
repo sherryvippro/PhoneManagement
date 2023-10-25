@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Admin.Models;
 using Admin.Services;
+using PagedList;
 
 namespace Admin.Controllers
 {
@@ -25,12 +26,23 @@ namespace Admin.Controllers
         public async Task<IActionResult> Index()
         {
             var qLBanDTContext = _context.TSp.Include(t => t.MaHangNavigation).Include(t => t.MaTlNavigation);
-            ViewBag.TotalProduct = await _productServices.GetTotalProductAsync();
-
             return View(await qLBanDTContext.ToListAsync());
 
         }
-
+        public async Task<IActionResult> Total()
+        {
+            ViewBag.TotalProduct = await _productServices.GetTotalProductAsync();
+            return View();
+        }
+       /* [Route("TSps/ProductList")]
+        public async Task<IActionResult> Index(int? page)
+        {
+            int pagesize = 5;
+            int pageNumber = page == null || page < 0 ? 1 : page.Value;
+            var lstProduct = _context.TSp.AsNoTracking().OrderBy(t => t.MaSp);
+            IPagedList<TSp> lst = lstProduct.ToPagedList(pageNumber, pagesize);
+            return View(lst);
+        }*/
         // GET: TSps/Details/5
         public async Task<IActionResult> Details(string id)
         {
