@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Admin.Models;
 using Admin.Services;
 using PagedList;
+using Admin.Models.ViewModels;
 
 namespace Admin.Controllers
 {
@@ -15,6 +16,7 @@ namespace Admin.Controllers
     {
         private readonly QLBanDTContext _context;
         private readonly ProductServices _productServices;
+        public int pageSize = 8;
 
         public TSpsController(QLBanDTContext context, ProductServices productServices)
         {
@@ -23,10 +25,41 @@ namespace Admin.Controllers
         }
 
         // GET: TSps
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int productPage = 1)
         {
-            var qLBanDTContext = _context.TSp.Include(t => t.MaHangNavigation).Include(t => t.MaTlNavigation);
-            return View(await qLBanDTContext.ToListAsync());
+            return View(
+                new ProductListViewModel
+                {
+                    Products = _context.TSp.Include(t => t.MaHangNavigation).Include(t => t.MaTlNavigation)
+                    .Skip((productPage - 1) * pageSize).Take(pageSize),
+                    PagingInfo = new PagingInfo
+                    {
+                        itemsPerPage = pageSize,
+                        currentPage = productPage,
+                        totalItem = _context.TSp.Count(),
+                    }
+                }
+            );
+
+        }
+        [HttpPost]
+        public async Task<IActionResult> Search(string keyword, int productPage = 1)
+        {
+            return View("Index",
+                new ProductListViewModel
+                {
+                    Products = _context.TSp.Include(t => t.MaHangNavigation).Include(t => t.MaTlNavigation)
+                    .Where(t => t.TenSp.Contains(keyword) || t.MaSp.Contains(keyword) 
+                    || t.MaHangNavigation.TenHang.Contains(keyword) || t.MaTlNavigation.TenTl.Contains(keyword))
+                    .Skip((productPage - 1) * pageSize).Take(pageSize),
+                    PagingInfo = new PagingInfo
+                    {
+                        itemsPerPage = pageSize,
+                        currentPage = productPage,
+                        totalItem = _context.TSp.Count(),
+                    }
+                }
+            );
 
         }
         public async Task<IActionResult> Total()
@@ -34,15 +67,7 @@ namespace Admin.Controllers
             ViewBag.TotalProduct = await _productServices.GetTotalProductAsync();
             return View();
         }
-       /* [Route("TSps/ProductList")]
-        public async Task<IActionResult> Index(int? page)
-        {
-            int pagesize = 5;
-            int pageNumber = page == null || page < 0 ? 1 : page.Value;
-            var lstProduct = _context.TSp.AsNoTracking().OrderBy(t => t.MaSp);
-            IPagedList<TSp> lst = lstProduct.ToPagedList(pageNumber, pagesize);
-            return View(lst);
-        }*/
+
         // GET: TSps/Details/5
         public async Task<IActionResult> Details(string id)
         {
@@ -181,14 +206,14 @@ namespace Admin.Controllers
             {
                 _context.TSp.Remove(tSp);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool TSpExists(string id)
         {
-          return (_context.TSp?.Any(e => e.MaSp == id)).GetValueOrDefault();
+            return (_context.TSp?.Any(e => e.MaSp == id)).GetValueOrDefault();
         }
     }
 }

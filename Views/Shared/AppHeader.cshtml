@@ -1,20 +1,42 @@
 ﻿<div class="app-header">
     @* <div class="page-title-heading">
-        Product Sales
-        <div class="page-title-subheading">
-            Dương Thị Hằng
-        </div>
+    Product Sales
+    <div class="page-title-subheading">
+    Dương Thị Hằng
+    </div>
     </div> *@
     <div class="app-header-right">
-        <div class="search-wrapper">
-            <i class="search-icon-wrapper typcn typcn-zoom-outline"></i>
-            <input type="text" placeholder="Search...">
-        </div>
+        @* Begin Search *@
+        <form asp-action="Search" asp-controller="TSps">
+            <div class="search-wrapper">
+                <input type="text" name="keyword" placeholder="Search...">
+                <button type="submit" class="search-icon-wrapper fa fa-search" style="margin-left: 15px; border: none; background-color: rgba(255,255,255,0.5); color: #DA624A;"></button>
+            </div>
+        </form>
+        <style>
+            .search-wrapper {
+                background-color: rgba(255,255,255,0.5);
+                padding: 10px;
+                border-radius: 50px;
+                opacity: 0.5;
+            }
+
+                .search-wrapper:hover {
+                    width: 300px;
+                    /* transition: 0.5s; */
+                    opacity: 1;
+                }
+
+            .search-wrapper input{
+                width: 100%;
+            }
+        </style>
+        @* End Search *@
         <div class="header-btn-lg pr-0">
             <div class="header-dots">
                 <div class="dropdown">
                     <button type="button" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown" class="p-0 mr-2 btn btn-link">
-                        <i class="typcn typcn-th-large-outline"></i>
+                        <i class="fa fa-th-large" style="color: #DA624A;"></i>
                     </button>
                     <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu-xl rm-pointers dropdown-menu dropdown-menu-right">
                         <div class="dropdown-menu-header">
@@ -76,7 +98,7 @@
                 </div>
                 <div class="dropdown">
                     <button type="button" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown" class="p-0 btn btn-link">
-                        <i class="typcn typcn-bell"></i>
+                        <i class="fa fa-bell" style="color: #DA624A;"></i>
                         <span class="badge badge-dot badge-dot-sm badge-danger">Notifications</span>
                     </button>
                     <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu-xl rm-pointers dropdown-menu dropdown-menu-right">

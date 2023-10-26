@@ -13691,13 +13691,12 @@ button,
         background: 0 0;
         padding: 5px 5px 5px 38px;
         border-radius: 30px;
-        width: 100px;
         outline: none !important
     }
 
     .search-wrapper .search-icon-wrapper {
         position: absolute;
-        left: 0;
+        
         top: 50%;
         margin-top: -16px;
         height: 32px;
