@@ -16,7 +16,7 @@ namespace Admin.Controllers
     {
         private readonly QLBanDTContext _context;
         private readonly ProductServices _productServices;
-        public int pageSize = 8;
+        public int pageSize = 3;
 
         public TSpsController(QLBanDTContext context, ProductServices productServices)
         {
@@ -130,7 +130,7 @@ namespace Admin.Controllers
             {
                 return NotFound();
             }
-            ViewData["MaHang"] = new SelectList(_context.THangs, "MaHang", "MaHang", tSp.MaHang);
+            ViewData["MaHang"] = new SelectList(_context.THangs, "MaHang", "TenHang", tSp.MaHang);
             ViewData["MaTl"] = new SelectList(_context.TTheLoais, "MaTl", "TenTl", tSp.MaTl);
             return View(tSp);
         }
@@ -167,7 +167,7 @@ namespace Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MaHang"] = new SelectList(_context.THangs, "MaHang", "MaHang", tSp.MaHang);
+            ViewData["MaHang"] = new SelectList(_context.THangs, "MaHang", "TenHang", tSp.MaHang);
             ViewData["MaTl"] = new SelectList(_context.TTheLoais, "MaTl", "TenTl", tSp.MaTl);
             return View(tSp);
         }

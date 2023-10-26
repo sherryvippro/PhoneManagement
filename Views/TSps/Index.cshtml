@@ -61,7 +61,8 @@
                             @Html.DisplayFor(modelItem => item.DonGiaBan)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.SoLuong)
+                            @* @Html.DisplayFor(modelItem => item.SoLuong) *@
+                            @item.DonGiaBan
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Anh)
@@ -85,14 +86,32 @@
         <a asp-action="Create" class="btn btn-primary">Thêm mới</a>
 
         <ul class="pagination justify-content-end" style="float: right; width: 50%; margin-right: 15px;">
-            <li class="page-item"><a class="page-link" href="~/TSps/?productPage=productPage-1">Previous</a></li>
+            <li class="page-item">
+                @if(Model.PagingInfo.currentPage == 1)
+                {
+                    <a class="page-link disabled" href="~/TSps/?productPage=@(Model.PagingInfo.currentPage - 1)">Previous</a>
+                }
+                else
+                {
+                    <a class="page-link" href="~/TSps/?productPage=@(Model.PagingInfo.currentPage - 1)">Previous</a>
+                }
+            </li>
             
             @for(int i = 1; i <= Model.PagingInfo.totalPage; i++)
             {
                 <li class="page-item"><a class="page-link" href="~/TSps/?productPage=@i">@i</a></li>
             }
 
-            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            <li class="page-item">
+                @if (Model.PagingInfo.currentPage == Model.PagingInfo.totalPage)
+                {
+                    <a class="page-link disabled" href="~/TSps/?productPage=@(Model.PagingInfo.currentPage + 1)">Next</a>
+                }
+                else
+                {
+                    <a class="page-link" href="~/TSps/?productPage=@(Model.PagingInfo.currentPage + 1)">Next</a>
+                }
+            </li>
         </ul>
 
     </div>
@@ -110,5 +129,9 @@
         margin-top: revert-layer;
         text-align: center;
         font-size: 2rem;
+    }
+    a.disabled{
+        pointer-events: none;
+        cursor: default;
     }
 </style>

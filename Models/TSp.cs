@@ -18,7 +18,7 @@ namespace Admin.Models
         public decimal? DonGiaNhap { get; set; }
         public decimal? DonGiaBan { get; set; }
         public int? SoLuong { get; set; }
-        public byte[]? Anh { get; set; }
+        public string? Anh { get; set; }
 
         public virtual THang? MaHangNavigation { get; set; }
         public virtual TTheLoai? MaTlNavigation { get; set; }
