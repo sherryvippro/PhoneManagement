@@ -37864,17 +37864,11 @@ button.toast-close-button {
     left: 0
 }
 
-    .slick-prev:before {
-        content: "îš†"
-    }
 
 .slick-next {
     right: 0
 }
 
-    .slick-next:before {
-        content: "îš„"
-    }
 
 .slick-dots {
     list-style: none;

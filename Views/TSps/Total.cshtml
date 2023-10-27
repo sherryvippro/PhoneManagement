@@ -43,7 +43,7 @@
                                         <div class="fsize-4 text-danger">
                                             <small class="opacity-5 text-muted">
                                                 $
-                                            </small> 4,764
+                                            </small> @ViewBag.ProductSold
                                         </div>
                                         <div class="ml-auto">
                                             <div class="widget-title ml-auto font-size-lg font-weight-normal text-muted">
@@ -73,7 +73,7 @@
                                             <span class="text-success pr-2">
                                                 <i class="fa fa-angle-down"></i>
                                             </span>
-                                            <small class="opacity-5">$</small> 1.5M
+                                            <small class="opacity-5">$</small> @ViewBag.TotalMoney
                                         </div>
                                         <div class="ml-auto">
                                             <div class="widget-title ml-auto font-size-lg font-weight-normal text-muted">
@@ -100,7 +100,7 @@
                                 <div class="widget-numbers mb-0 w-100">
                                     <div class="widget-chart-flex">
                                         <div class="fsize-4">
-                                            <small class="opacity-5">$</small> 31,564
+                                            <small class="opacity-5">$</small> @ViewBag.Revenue
                                         </div>
                                         <div class="ml-auto">
                                             <div class="widget-title ml-auto font-size-lg font-weight-normal text-muted">
@@ -127,7 +127,7 @@
                                     <div class="widget-chart-flex">
                                         <div>
                                             <small class="opacity-5">$</small>
-                                            <span>1000</span>
+                                            <span>@ViewBag.Profit</span>
                                         </div>
                                         <div class="widget-title ml-2 opacity-5 font-size-lg text-muted">
                                             Lợi nhuận
@@ -150,6 +150,7 @@
         <div class="p-1 slick-slider-sm mx-auto">
             <div class="slick-slider">
                 <div>
+                    <button class="slick-prev" aria-label="Preivous" type="button"><i class="fa fa-angle-left"></i>vc</button>
                     <div class="widget-chart widget-chart2 text-left p-0">
                         <div class="widget-chat-wrapper-outer">
                             <div class="widget-chart-content widget-chart-content-lg pb-0">
@@ -180,6 +181,7 @@
                             </div>
                         </div>
                     </div>
+                    <button class="slick-prev slick-slider" aria-label="Preivous" type="button"><i class="fa fa-angle-right"></i></button>
                 </div>
                 <div>
                     <div class="widget-chart widget-chart2 text-left p-0">
@@ -278,35 +280,9 @@
         <div class="mb-3 card">
             <div class="card-header-tab card-header">
                 <div class="card-header-title font-size-lg text-capitalize font-weight-normal">
-                    <i class="header-icon lnr-laptop-phone mr-3 text-muted opacity-6"> </i>Best Selling Products
+                    <i class="header-icon fa fa-laptop mr-3 text-muted opacity-6"> </i>Sản phẩm bán chạy nhất
                 </div>
-                <div class="btn-actions-pane-right actions-icon-btn">
-                    <div class="btn-group dropdown">
-                        <button data-toggle="dropdown" type="button" aria-haspopup="true" aria-expanded="false" class="btn-icon btn-icon-only btn btn-link"><i class="pe-7s-menu btn-icon-wrapper"></i></button>
-                        <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu-shadow dropdown-menu-hover-link dropdown-menu">
-                            <h6 tabindex="-1" class="dropdown-header">Header</h6>
-                            <button type="button" tabindex="0" class="dropdown-item">
-                                <i class="dropdown-icon lnr-inbox"> </i><span>Menus</span>
-                            </button>
-                            <button type="button" tabindex="0" class="dropdown-item">
-                                <i class="dropdown-icon lnr-file-empty"> </i><span>Settings</span>
-                            </button>
-                            <button type="button" tabindex="0" class="dropdown-item">
-                                <i class="dropdown-icon lnr-book"> </i><span>Actions</span>
-                            </button>
-                            <div tabindex="-1" class="dropdown-divider"></div>
-                            <div class="p-1 text-right">
-                                <button class="mr-2 btn-shadow btn-sm btn btn-link">
-                                    View
-                                    Details
-                                </button>
-                                <button class="mr-2 btn-shadow btn-sm btn btn-primary">
-                                    Action
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
             </div>
             <div class="widget-chart widget-chart2 text-left p-0">
                 <div class="widget-chat-wrapper-outer">

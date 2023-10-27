@@ -16,7 +16,7 @@ namespace Admin.Controllers
     {
         private readonly QLBanDTContext _context;
         private readonly ProductServices _productServices;
-        public int pageSize = 3;
+        public int pageSize = 8;
 
         public TSpsController(QLBanDTContext context, ProductServices productServices)
         {
@@ -65,6 +65,10 @@ namespace Admin.Controllers
         public async Task<IActionResult> Total()
         {
             ViewBag.TotalProduct = await _productServices.GetTotalProductAsync();
+            ViewBag.TotalMoney = await _productServices.GetTotalMoneyAsync();
+            ViewBag.Revenue = await _productServices.GetRevenueAsync();
+            ViewBag.Profit = await _productServices.GetProfitAsync();
+            ViewBag.ProductSold = await _productServices.GetProductSold();
             return View();
         }
 
