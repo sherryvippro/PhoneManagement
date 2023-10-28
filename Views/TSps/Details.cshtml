@@ -11,6 +11,12 @@
 
 <div>
     <dl class="row">
+        <dt class="col-sm-2">
+            Mã sản phẩm
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MaSp)
+        </dd>
         <dt class = "col-sm-2">
             Tên sản phẩm
         </dt>
@@ -41,11 +47,23 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Anh)
         </dd>
+        <dt class="col-sm-2">
+            Mã hãng
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MaHang)
+            </dd>
         <dt class = "col-sm-2">
             Tên hãng
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.MaHangNavigation.TenHang)
+        </dd>
+        <dt class="col-sm-2">
+            Mã thể loại
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.MaTl)
         </dd>
         <dt class = "col-sm-2">
             Tên thể loại

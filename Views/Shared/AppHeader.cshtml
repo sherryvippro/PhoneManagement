@@ -9,8 +9,8 @@
         @* Begin Search *@
         <form asp-action="Search" asp-controller="TSps">
             <div class="search-wrapper">
+                <button type="submit" class="search-icon-wrapper fa fa-search" style="border: none; background-color: rgba(255,255,255,0.5); color: #DA624A;"></button>
                 <input type="text" name="keyword" placeholder="Search...">
-                <button type="submit" class="search-icon-wrapper fa fa-search" style="margin-left: 15px; border: none; background-color: rgba(255,255,255,0.5); color: #DA624A;"></button>
             </div>
         </form>
         <style>
@@ -22,7 +22,7 @@
             }
 
                 .search-wrapper:hover {
-                    width: 300px;
+                    /* width: 300px; */
                     /* transition: 0.5s; */
                     opacity: 1;
                 }

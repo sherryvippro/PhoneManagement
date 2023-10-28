@@ -65,6 +65,10 @@ namespace Admin.Controllers
         public async Task<IActionResult> Total()
         {
             ViewBag.TotalProduct = await _productServices.GetTotalProductAsync();
+            ViewBag.TotalMoney = await _productServices.GetTotalMoneyAsync();
+            ViewBag.Revenue = await _productServices.GetRevenueAsync();
+            ViewBag.Profit = await _productServices.GetProfitAsync();
+            ViewBag.ProductSold = await _productServices.GetProductSold();
             return View();
         }
 
@@ -130,7 +134,7 @@ namespace Admin.Controllers
             {
                 return NotFound();
             }
-            ViewData["MaHang"] = new SelectList(_context.THangs, "MaHang", "MaHang", tSp.MaHang);
+            ViewData["MaHang"] = new SelectList(_context.THangs, "MaHang", "TenHang", tSp.MaHang);
             ViewData["MaTl"] = new SelectList(_context.TTheLoais, "MaTl", "TenTl", tSp.MaTl);
             return View(tSp);
         }
@@ -167,7 +171,7 @@ namespace Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MaHang"] = new SelectList(_context.THangs, "MaHang", "MaHang", tSp.MaHang);
+            ViewData["MaHang"] = new SelectList(_context.THangs, "MaHang", "TenHang", tSp.MaHang);
             ViewData["MaTl"] = new SelectList(_context.TTheLoais, "MaTl", "TenTl", tSp.MaTl);
             return View(tSp);
         }
