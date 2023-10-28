@@ -13,30 +13,115 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
             <div class="form-group">
-                <label asp-for="SoHdn" class="control-label"></label>
+                <label asp-for="SoHdn" class="control-label">Số hóa đơn</label>
                 <input asp-for="SoHdn" class="form-control" />
                 <span asp-validation-for="SoHdn" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="NgayNhap" class="control-label"></label>
+                <label asp-for="NgayNhap" class="control-label">Ngày nhập</label>
                 <input asp-for="NgayNhap" class="form-control" />
                 <span asp-validation-for="NgayNhap" class="text-danger"></span>
             </div>
+        <hr />
+        </form>
+    </div>
+    <div class="col-md-4">
+        <form asp-action="Create">
             <div class="form-group">
-                <label asp-for="MaNcc" class="control-label"></label>
-                <select asp-for="MaNcc" class ="form-control" asp-items="ViewBag.MaNcc"></select>
+                <label asp-for="MaNcc" class="control-label">Nhà cung cấp</label>
+                <select asp-for="MaNcc" class="form-control" asp-items="ViewBag.MaNcc"></select>
             </div>
             <div class="form-group">
-                <label asp-for="TongHdn" class="control-label"></label>
+                <label asp-for="TongHdn" class="control-label">Tổng tiền</label>
                 <input asp-for="TongHdn" class="form-control" />
                 <span asp-validation-for="TongHdn" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
+            <hr />
         </form>
     </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label asp-for="SoHdn" class="control-label">Mã hàng</label>
+            <input asp-for="MaSpNavigation" class="form-control" />
+            <span asp-validation-for="MaSpNavigation" class="text-danger"></span>
+        </div>
+    </div>
+</div>
+
+<div>
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+            <div class="form-group col-md-4">
+                <label asp-for="MaSpNavigation.TenSp" class="control-label">Tên sản phẩm</label>
+                <input asp-for="MaSpNavigation.TenSp" class="form-control" />
+                <span asp-validation-for="MaSpNavigation.TenSp" class="text-danger"></span>
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="MaSpNavigation.MaTl" class="control-label">Thể loại</label>
+                <select asp-for="MaSpNavigation.MaTl" class="form-control" asp-items="ViewBag.MaTl"></select>
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="MaSpNavigation.MaHang" class="control-label">Mã hãng</label>
+                <select asp-for="MaSpNavigation.MaHang" class="form-control" asp-items="ViewBag.MaHang"></select>
+            </div>
+            <div class="form-group col-md-4">
+                <label asp-for="MaSpNavigation.DonGiaNhap" class="control-label">Đơn giá nhập</label>
+                <input asp-for="MaSpNavigation.DonGiaNhap" class="form-control" />
+                <span asp-validation-for="MaSpNavigation.DonGiaNhap" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group col-md-4">
+                <label asp-for="MaSpNavigation.SoLuong" class="control-label">Số lượng</label>
+                <input asp-for="MaSpNavigation.SoLuong" class="form-control" />
+                <span asp-validation-for="MaSpNavigation.SoLuong" class="text-danger"></span>
+            </div>
+
+            <hr />
+            
+            </div>
+            
+    </form>
+</div>
+
+<hr />
+
+<div class="col-md-12" style="background-color: white; padding-top: 10px; border-radius: 5px; box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.1);">
+    <table class="align-middle text-truncate mb-0 table table-borderless table-hover">
+        <thead>
+            <tr>
+                <th>
+                    Tên sản phẩm
+                </th>
+                <th>
+                    Đơn giá bán
+                </th>
+                <th>
+                    Số lượng
+                </th>
+                <th>
+                    Ảnh
+                </th>
+                <th>
+                    Tên hãng
+                </th>
+                <th>
+                    Tên thể loại
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+<hr />
+<div class="form-group">
+    <input type="submit" value="Create" class="btn btn-primary" />
 </div>
 
 <div>

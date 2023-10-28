@@ -12,5 +12,6 @@ namespace Admin.Models
 
         public virtual TSp MaSpNavigation { get; set; } = null!;
         public virtual THoaDonNhap SoHdnNavigation { get; set; } = null!;
+
     }
 }

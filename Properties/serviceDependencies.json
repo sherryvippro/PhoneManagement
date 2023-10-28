@@ -4,10 +4,6 @@
       "type": "mssql",
       "connectionId": "ConnectionStrings:QLBanDT",
       "dynamicId": null
-    },
-    "secrets1": {
-      "type": "secrets",
-      "connectionId": null
     }
   }
 }

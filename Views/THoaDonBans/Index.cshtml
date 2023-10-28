@@ -1,48 +1,90 @@
-﻿@model IEnumerable<Admin.Models.THoaDonBan>
+﻿@using Admin.Models.ViewModels;
+@model InvoiceOutListViewModel
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/MyLayout.cshtml";
 }
 
-<h1>Index</h1>
+<div class="backgr-color" style="background-color: white; padding-top: 10px; border-radius: 5px; box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.1);">
+    <div>
+        <h1 class="invoiceOut-list">DANH SÁCH HÓA ĐƠN BÁN</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Mã đơn hàng
+                    </th>
+                    <th>
+                        Ngày bán
+                    </th>
+                    <th>
+                        Khách hàng
+                    </th>
+                    <th>
+                        Tổng tiền
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.InvoiceOut)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SoHdb)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SoHdbNavigation.NgayBan)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SoHdbNavigation.MaKhNavigation.TenKh)
+                        </td>
+                        @* <td>
+                    @Html.DisplayFor(modelItem => item.Slban)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.KhuyenMai)
+                    </td> *@
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SoHdbNavigation.TongHdb)
+                        </td>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.NgayBan)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TongHdb)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MaKhNavigation)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.NgayBan)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TongHdb)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaKhNavigation.MaKh)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.SoHdb">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.SoHdb">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.SoHdb">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.SoHdb">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.SoHdb">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.SoHdb">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <hr />
+        <a asp-action="Create" class="btn btn-primary">Thêm mới</a>
+
+        <ul class="pagination justify-content-end" style="float: right; width: 50%; margin-right: 15px;">
+            <li class="page-item"><a class="page-link" href="~/TSps/?productPage=productPage-1">Previous</a></li>
+
+            @for (int i = 1; i <= Model.PagingInfo.totalPage; i++)
+            {
+                <li class="page-item"><a class="page-link" href="~/TSps/?productPage=@i">@i</a></li>
+            }
+
+            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        </ul>
+    </div>
+</div>
+
+<style>
+    .btn {
+        float: left;
+        margin-left: 15px;
+    }
+
+    .invoiceOut-list {
+        margin-top: revert-layer;
+        text-align: center;
+        font-size: 2rem;
+    }
+</style>

@@ -6,12 +6,6 @@
       "type": "mssql.onprem",
       "connectionId": "ConnectionStrings:QLBanDT",
       "dynamicId": null
-    },
-    "secrets1": {
-      "secretStore": null,
-      "resourceId": null,
-      "type": "secrets.user",
-      "connectionId": null
     }
   }
 }

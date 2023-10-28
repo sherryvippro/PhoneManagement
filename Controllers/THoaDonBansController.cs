@@ -6,12 +6,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Admin.Models;
+using Admin.Models.ViewModels;
+using System.Drawing.Printing;
+using Admin.Services;
+using System.Net.NetworkInformation;
+
 
 namespace Admin.Controllers
 {
     public class THoaDonBansController : Controller
     {
         private readonly QLBanDTContext _context;
+        private readonly ProductServices _productServices;
+        public int pageSize = 10;
 
         public THoaDonBansController(QLBanDTContext context)
         {
@@ -20,10 +27,24 @@ namespace Admin.Controllers
 
         // GET: THoaDonBans
         [Route("HDB/List")]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int invoiceOutPage = 1)
         {
-            var qLBanDTContext = _context.THoaDonBans.Include(t => t.MaKhNavigation);
-            return View(await qLBanDTContext.ToListAsync());
+            /*var qLBanDTContext = _context.THoaDonBans.Include(t => t.MaKhNavigation);
+            return View(await qLBanDTContext.ToListAsync());*/
+
+            return View(
+                new InvoiceOutListViewModel
+                {
+                    InvoiceOut = _context.TChiTietHdbs.Include(t => t.SoHdbNavigation)
+                    .Skip((invoiceOutPage - 1) * pageSize).Take(pageSize),
+                    PagingInfo = new PagingInfo
+                    {
+                        itemsPerPage = pageSize,
+                        currentPage = invoiceOutPage,
+                        totalItem = _context.TChiTietHdbs.Count()
+                    }
+                }
+            ); ;
         }
 
         // GET: THoaDonBans/Details/5
@@ -57,7 +78,7 @@ namespace Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SoHdb,NgayBan,MaKh,TongHdb")] THoaDonBan tHoaDonBan)
+        public async Task<IActionResult> Create([Bind("SoHdb,NgayBan,MaKh,TongHdb,")] THoaDonBan tHoaDonBan)
         {
             if (ModelState.IsValid)
             {

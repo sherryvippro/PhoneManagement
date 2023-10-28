@@ -1,48 +1,83 @@
-﻿@model IEnumerable<Admin.Models.THoaDonNhap>
+﻿@using Admin.Models.ViewModels;
+@model InvoiceInListViewModel;
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/MyLayout.cshtml";
 }
 
-<h1>Index</h1>
+<div class="backgr-color" style="background-color: white; padding-top: 10px; border-radius: 5px; box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.1);">
+    <h1 class="invoiceIn-list">DANH SÁCH HÓA ĐƠN NHẬP</h1>
+    
+    <div>
+        <table class="table" class="table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        Mã đơn nhập
+                    </th>
+                    <th>
+                        Ngày nhập
+                    </th>
+                    <th>
+                        Nhà cung cấp
+                    </th>
+                    <th>
+                        Tổng tiền
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.InvoiceIn)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SoHdn)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SoHdnNavigation.NgayNhap)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SoHdnNavigation.MaNccNavigation.TenNcc)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SoHdnNavigation.TongHdn)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.SoHdn">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.SoHdn">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.SoHdn">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <hr />
+        <a asp-action="Create" class="btn btn-primary">Thêm mới</a>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.NgayNhap)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TongHdn)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MaNccNavigation)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.NgayNhap)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TongHdn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaNccNavigation.MaNcc)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.SoHdn">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.SoHdn">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.SoHdn">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+        <ul class="pagination justify-content-end" style="float: right; width: 50%; margin-right: 15px;">
+            <li class="page-item"><a class="page-link" href="~/TSps/?productPage=productPage-1">Previous</a></li>
+
+            @for (int i = 1; i <= Model.PagingInfo.totalPage; i++)
+            {
+                <li class="page-item"><a class="page-link" href="~/TSps/?productPage=@i">@i</a></li>
+            }
+
+            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        </ul>
+    </div>
+</div>
+
+<style>
+    .btn {
+        float: left;
+        margin-left: 15px;
+    }
+
+    .invoiceIn-list {
+        margin-top: revert-layer;
+        text-align: center;
+        font-size: 2rem;
+    }
+</style>

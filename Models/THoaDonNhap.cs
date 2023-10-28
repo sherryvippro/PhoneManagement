@@ -17,5 +17,7 @@ namespace Admin.Models
 
         public virtual TNhaCungCap? MaNccNavigation { get; set; }
         public virtual ICollection<TChiTietHdn> TChiTietHdns { get; set; }
+
+        
     }
 }

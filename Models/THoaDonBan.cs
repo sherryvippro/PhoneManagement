@@ -17,5 +17,6 @@ namespace Admin.Models
 
         public virtual TKhachHang? MaKhNavigation { get; set; }
         public virtual ICollection<TChiTietHdb> TChiTietHdbs { get; set; }
+
     }
 }
