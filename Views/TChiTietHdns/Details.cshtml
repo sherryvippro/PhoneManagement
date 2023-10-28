@@ -1,0 +1,43 @@
+﻿@model Admin.Models.TChiTietHdn
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/MyLayout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>TChiTietHdn</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Slnhap)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Slnhap)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.KhuyenMai)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.KhuyenMai)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MaSpNavigation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MaSpNavigation.MaSp)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SoHdnNavigation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SoHdnNavigation.SoHdn)
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Back to List</a>
+</div>

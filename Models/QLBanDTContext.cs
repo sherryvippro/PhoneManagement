@@ -32,11 +32,11 @@ namespace Admin.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-<<<<<<< HEAD
-                optionsBuilder.UseSqlServer("Data Source = DESKTOP-Q96SDP5\\SQLEXPRESS; Initial Catalog = QLBanDT; Persist Security Info = true; User ID = sa; Password = 123456;");
-=======
+
+                /*optionsBuilder.UseSqlServer("Data Source = DESKTOP-Q96SDP5\\SQLEXPRESS; Initial Catalog = QLBanDT; Persist Security Info = true; User ID = sa; Password = 123456;");*/
+
                 optionsBuilder.UseSqlServer("Data Source = DuongHang; Initial Catalog = QLBanDT; Persist Security Info = true; User ID = sa; Password = 123;");
->>>>>>> d37a202db3c21d86472f52f546eb91a38a6045a9
+
             }
         }
 
@@ -234,11 +234,10 @@ namespace Admin.Models
                     .HasMaxLength(10)
                     .HasColumnName("MaSP");
 
-<<<<<<< HEAD
-                entity.Property(e => e.Anh).HasColumnType("nvarchar(100)");
-=======
+
+
                 entity.Property(e => e.Anh).HasColumnType("nvarchar");
->>>>>>> d37a202db3c21d86472f52f546eb91a38a6045a9
+
 
                 entity.Property(e => e.DonGiaBan).HasColumnType("money");
 

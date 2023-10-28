@@ -98,7 +98,7 @@ namespace Admin.Controllers
             /*var MaTl = (from tSp in _context.TSp
                         join tTl in _context.TTheLoais on tSp.MaTl equals tTl.MaTl
                         select new { tTl.MaTl, tTl.TenTl });*/
-            ViewData["MaHang"] = new SelectList(_context.THangs, "MaHang", "MaHang");
+            ViewData["MaHang"] = new SelectList(_context.THangs, "MaHang", "TenHang");
             ViewData["MaTl"] = new SelectList(_context.TTheLoais, "MaTl", "TenTl");
             return View();
         }

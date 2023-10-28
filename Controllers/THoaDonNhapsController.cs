@@ -6,19 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Admin.Models;
-using Admin.Models.ViewModels;
-using System.Drawing.Printing;
-using Admin.Services;
 
 namespace Admin.Controllers
 {
     public class THoaDonNhapsController : Controller
     {
-
         private readonly QLBanDTContext _context;
-        private readonly ProductServices _productServices;
-        public int pageSize = 10;
-
 
         public THoaDonNhapsController(QLBanDTContext context)
         {
@@ -26,22 +19,10 @@ namespace Admin.Controllers
         }
 
         // GET: THoaDonNhaps
-        public async Task<IActionResult> Index(int invoiceInPage = 1)
+        public async Task<IActionResult> Index()
         {
-            return View(
-                new InvoiceInListViewModel
-                {
-                    InvoiceIn = _context.TChiTietHdns.Include(t => t.SoHdnNavigation).Include(t => t.MaSpNavigation)
-                    .Include(t => t.MaSpNavigation)
-                    .Skip((invoiceInPage - 1) * pageSize).Take(pageSize),
-                    PagingInfo = new PagingInfo
-                    {
-                        itemsPerPage = pageSize,
-                        currentPage = invoiceInPage,
-                        totalItem = _context.TChiTietHdbs.Count()
-                    }
-                }
-            );
+            var qLBanDTContext = _context.THoaDonNhaps.Include(t => t.MaNccNavigation);
+            return View(await qLBanDTContext.ToListAsync());
         }
 
         // GET: THoaDonNhaps/Details/5
@@ -66,9 +47,7 @@ namespace Admin.Controllers
         // GET: THoaDonNhaps/Create
         public IActionResult Create()
         {
-            var tHoaDonNhap = new THoaDonNhap();
-            var tChiTietHDN = new TChiTietHdn();
-            tChiTietHDN.list = new List<TSp>();
+            ViewData["MaNcc"] = new SelectList(_context.TNhaCungCaps, "MaNcc", "TenNcc");
             return View();
         }
 
@@ -102,7 +81,7 @@ namespace Admin.Controllers
             {
                 return NotFound();
             }
-            ViewData["MaNcc"] = new SelectList(_context.TNhaCungCaps, "MaNcc", "MaNcc", tHoaDonNhap.MaNcc);
+            ViewData["MaNcc"] = new SelectList(_context.TNhaCungCaps, "MaNcc", "TenNcc", tHoaDonNhap.MaNcc);
             return View(tHoaDonNhap);
         }
 
@@ -138,7 +117,7 @@ namespace Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MaNcc"] = new SelectList(_context.TNhaCungCaps, "MaNcc", "MaNcc", tHoaDonNhap.MaNcc);
+            ViewData["MaNcc"] = new SelectList(_context.TNhaCungCaps, "MaNcc", "TenNcc", tHoaDonNhap.MaNcc);
             return View(tHoaDonNhap);
         }
 

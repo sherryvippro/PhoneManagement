@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Admin.Models.TChiTietHdn>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/MyLayout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Slnhap)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.KhuyenMai)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MaSpNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SoHdnNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SoHdnNavigation.MaNccNavigation.TenNcc)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Slnhap)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.KhuyenMai)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MaSpNavigation.MaSp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoHdnNavigation.SoHdn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SoHdnNavigation.MaNccNavigation.TenNcc)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
