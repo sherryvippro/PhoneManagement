@@ -50,7 +50,7 @@ namespace Admin.Controllers
         public IActionResult Create()
         {
             ViewData["MaSp"] = new SelectList(_context.TSp, "MaSp", "TenSp");
-            ViewData["SoHdn"] = new SelectList(_context.THoaDonNhaps, "SoHdn", "SoHdn");
+            ViewData["SoHdn"] = new SelectList(_context.TChiTietHdns, "SoHdn", "SoHdn");
             /*ViewData["MaNcc"] = new SelectList(_context.THoaDonNhaps, "MaNcc", "TenNcc");*/
             return View();
         }
@@ -62,7 +62,7 @@ namespace Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("SoHdn,MaSp,Slnhap,KhuyenMai")] TChiTietHdn tChiTietHdn)
         {
-            if (ModelState.IsValid)
+            /*if (ModelState.IsValid)
             {
                 _context.Add(tChiTietHdn);
                 await _context.SaveChangesAsync();
@@ -72,7 +72,22 @@ namespace Admin.Controllers
             ViewData["SoHdn"] = new SelectList(_context.THoaDonNhaps, "SoHdn", "SoHdn", tChiTietHdn.SoHdn);
 
 
-            return View("Index", tChiTietHdn);
+            return View("Index", tChiTietHdn);*/
+            if (ModelState.IsValid)
+            {
+                _context.Add(tChiTietHdn);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+
+            // Load your dropdown data
+            ViewData["MaSp"] = new SelectList(_context.TSp, "MaSp", "TenSp", tChiTietHdn.MaSp);
+            ViewData["SoHdn"] = new SelectList(_context.THoaDonNhaps, "SoHdn", "SoHdn", tChiTietHdn.SoHdn);
+
+            // Load a list of TChiTietHdn to display in the view
+            var chiTietHdnList = await _context.TChiTietHdns.ToListAsync();
+
+            return View("Index", chiTietHdnList);
         }
 
         // GET: TChiTietHdns/Edit/5

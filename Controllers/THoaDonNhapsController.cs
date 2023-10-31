@@ -6,16 +6,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Admin.Models;
+using Admin.Services;
 
 namespace Admin.Controllers
 {
     public class THoaDonNhapsController : Controller
     {
         private readonly QLBanDTContext _context;
+        private readonly ProductServices _productServices;
 
-        public THoaDonNhapsController(QLBanDTContext context)
+        public THoaDonNhapsController(QLBanDTContext context, ProductServices productServices)
         {
             _context = context;
+            _productServices = productServices;
         }
 
         // GET: THoaDonNhaps
@@ -45,8 +48,9 @@ namespace Admin.Controllers
         }
 
         // GET: THoaDonNhaps/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            ViewBag.SoHDN = await _productServices.GenerateSHDNAsync();
             ViewData["MaNcc"] = new SelectList(_context.TNhaCungCaps, "MaNcc", "TenNcc");
             return View();
         }
@@ -64,6 +68,7 @@ namespace Admin.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewBag.SoHDN = await _productServices.GenerateSHDNAsync();
             ViewData["MaNcc"] = new SelectList(_context.TNhaCungCaps, "MaNcc", "TenNcc", tHoaDonNhap.MaNcc);
             return View(tHoaDonNhap);
         }
@@ -163,5 +168,7 @@ namespace Admin.Controllers
         {
           return (_context.THoaDonNhaps?.Any(e => e.SoHdn == id)).GetValueOrDefault();
         }
+
+        
     }
 }
