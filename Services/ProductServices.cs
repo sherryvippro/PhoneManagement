@@ -1,6 +1,8 @@
-﻿using Admin.Models;
+﻿using Admin.InputModels;
+using Admin.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.VisualBasic;
 using System.ComponentModel;
 using System.Linq;
@@ -10,10 +12,31 @@ namespace Admin.Services
     public class ProductServices
     {
         private readonly QLBanDTContext _context;
+        private readonly ImageServices _imageServices;
 
-        public ProductServices(QLBanDTContext context)
+        public ProductServices(QLBanDTContext context, ImageServices imageServices)
         {
             _context = context;
+            _imageServices = imageServices;
+        }
+        public async Task<TSp> CreateProductAsync(TSp tSp,string ID)
+        {
+            var query = _context.TSp.Find(ID);
+            if(query != null)
+            {
+                query.TenSp = tSp.TenSp;
+                query.SoLuong += tSp.SoLuong;
+                query.DonGiaBan = tSp.DonGiaBan;
+                query.DonGiaNhap = tSp.DonGiaNhap;
+                query.Anh = tSp.Anh;
+                _context.SaveChanges();
+            }
+            else
+            {
+                _context.Add(tSp);
+                _context.SaveChanges();
+            }
+            return tSp;
         }
 
         public async Task<int> GetTotalProductAsync()
@@ -36,33 +59,56 @@ namespace Admin.Services
             var profit = await _context.THoaDonBans.SumAsync(x => x.TongHdb) - await _context.THoaDonNhaps.SumAsync(x => x.TongHdn);
             return (double)profit;
         }
-        public async Task<double> GetProductSold()
+        public async Task<double> GetProductSoldAsync()
         {
             var productSold = await _context.TChiTietHdbs.Include(t => t.SoHdbNavigation).SumAsync(x => x.Slban);
             return (double)productSold;
         }
-        /*public async Task<TChiTietHdb> GetTopProducts()
+        public async Task<TChiTietHdb> GetTopProductsAsync()
         {
-            *//*var day =  _context.THoaDonBans.Select(x => x.NgayBan).ToList();
+            /*var day =  _context.THoaDonBans.Select(x => x.NgayBan).ToList();
             foreach(var i in day)
             {
                 DateTime.Parse(i);
-            }*//*
+            }*/
             var query = from sp in _context.TSp
                         join chiTietHDB in _context.TChiTietHdbs on sp.MaSp equals chiTietHDB.MaSp
                         join hoaDonBan in _context.THoaDonBans on chiTietHDB.SoHdb equals hoaDonBan.SoHdb
-                        *//*where DateTime.Parse(hoaDonBan.NgayBan).Year == DateTime.Now.Year*//*
-                        group chiTietHDB by sp.MaSp into g
-                        orderby g.Sum(x => x.Slban) descending
+                        where hoaDonBan.NgayBan.Value.Year == DateTime.Now.Year
+                        /*group chiTietHDB by sp.MaSp into g
+                        orderby g.Sum(x => x.Slban) descending*/
                         select new
                         {
-                            masp = g.Key,
-                            TotalSales = g.Sum(x => x.Slban)
+                            masp = sp.MaSp,
+                            TotalSales = chiTietHDB.Slban,
+                            sohdb = chiTietHDB.SoHdb 
                         };
-            var result = query.FirstOrDefault();
+            var result = await query.FirstOrDefaultAsync();
+            return new TChiTietHdb() { MaSp = result.masp, SoHdb = result.sohdb};
+        }
 
-            return result;
-        }*/
+        public async Task<THoaDonBan> GetMoneyofTopProductsAsync()
+        {
+            /*var day =  _context.THoaDonBans.Select(x => x.NgayBan).ToList();
+            foreach(var i in day)
+            {
+                DateTime.Parse(i);
+            }*/
+            var query = from sp in _context.TSp
+                        join chiTietHDB in _context.TChiTietHdbs on sp.MaSp equals chiTietHDB.MaSp
+                        join hoaDonBan in _context.THoaDonBans on chiTietHDB.SoHdb equals hoaDonBan.SoHdb
+                        where hoaDonBan.NgayBan.Value.Year == DateTime.Now.Year
+                        /*group chiTietHDB by sp.MaSp into g
+                        orderby g.Sum(x => x.Slban) descending*/
+                        select new
+                        {
+                            masp = sp.MaSp,
+                            TotalSales = chiTietHDB.Slban,
+                            sohdb = chiTietHDB.SoHdb
+                        };
+            var result = await query.FirstOrDefaultAsync();
+            return new THoaDonBan() { TongHdb = result.TotalSales, SoHdb = result.sohdb };
+        }
 
         public async Task<string> GenerateSHDNAsync()
         {
@@ -81,6 +127,5 @@ namespace Admin.Services
             }
             return (string)SoHDN;
         }
-
     }
 }

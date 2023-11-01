@@ -1,10 +1,10 @@
 ﻿@using Admin.Models.ViewModels;
-@model ProductListViewModel
+@model SearchProductListViewModel
 @* @model IEnumerable<Admin.Models.TSp> *@
 
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Search";
     Layout = "~/Views/Shared/MyLayout.cshtml";
 }
 
@@ -12,7 +12,7 @@
 
 @* <h2>QUẢN LÝ SẢN PHẨM/Sản phẩm</h2> *@
 <div class="backgr-color" style="background-color: white; padding-top: 10px; border-radius: 5px; box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.1);">
-    <h1 class="product-list">DANH sÁCH SẢN PHẨM</h1>
+    <h1 class="product-list">DANH SÁCH SẢN PHẨM</h1>
     @*  <hr />
     <div class="search-wrapper">
     <i class="search-icon-wrapper typcn typcn-zoom-outline"></i>
@@ -20,7 +20,7 @@
     </div> *@
     <hr />
     <div class="table-responsive">
-        <div id="content">
+        <div id="content-search">
             <table class="align-middle text-truncate mb-0 table table-borderless table-hover">
                 <thead>
                     <tr>
@@ -90,71 +90,72 @@
             </table>
         </div>
         <hr />
-        <a asp-action="Create" class="btn btn-primary">Thêm mới</a>
+        <a asp-action="Index" class="btn btn-primary">Quay lại</a>
+        @* <a asp-action="Create" class="btn btn-primary">Thêm mới</a> *@
 
-        
+
+
+        @* <ul class="pagination justify-content-end" style="float: right; width: 50%; margin-right: 15px;">
+        <li class="page-item">
+        @if (Model.PagingInfo.currentPage == 1)
+        {
+        <a class="page-link disabled" href="~/TSps/?productPage=@(Model.PagingInfo.currentPage - 1)">Previous</a>
+        }
+        else
+        {
+        <a class="page-link" href="~/TSps/?productPage=@(Model.PagingInfo.currentPage - 1)">Previous</a>
+        }
+        </li>
+
+        @for (int i = 1; i <= Model.PagingInfo.totalPage; i++)
+        {
+        <li class="page-item"><a class="page-link" href="~/TSps/?productPage=@i">@i</a></li>
+        }
+
+        <li class="page-item">
+        @if (Model.PagingInfo.currentPage == Model.PagingInfo.totalPage)
+        {
+        <a class="page-link disabled" href="~/TSps/?productPage=@(Model.PagingInfo.currentPage + 1)">Next</a>
+        }
+        else
+        {
+        <a class="page-link" href="~/TSps/?productPage=@(Model.PagingInfo.currentPage + 1)">Next</a>
+        }
+        </li>
+        </ul> *@
+
 
         @* <ul class="pagination justify-content-end" style="float: right; width: 50%; margin-right: 15px;">
             <li class="page-item">
-                @if (Model.PagingInfo.currentPage == 1)
+                @if (Model.SearchPagingInfo.currentPage == 1)
                 {
-                    <a class="page-link disabled" href="~/TSps/?productPage=@(Model.PagingInfo.currentPage - 1)">Previous</a>
+                    <a class="page-link disabled" href="~/TSps/Search?keyword=@Model.SearchPagingInfo.keyWord&productPage=@(Model.SearchPagingInfo.currentPage - 1)">Previous</a>
                 }
                 else
                 {
-                    <a class="page-link" href="~/TSps/?productPage=@(Model.PagingInfo.currentPage - 1)">Previous</a>
+                    <a class="page-link" href="~/TSps/Search?keyword=@Model.SearchPagingInfo.keyWord&productPage=@(Model.SearchPagingInfo.currentPage - 1)">Previous</a>
                 }
             </li>
 
-            @for (int i = 1; i <= Model.PagingInfo.totalPage; i++)
+            @for (int i = 1; i <= Model.SearchPagingInfo.totalPage; i++)
             {
-                <li class="page-item"><a class="page-link" href="~/TSps/?productPage=@i">@i</a></li>
-            }
-
-            <li class="page-item">
-                @if (Model.PagingInfo.currentPage == Model.PagingInfo.totalPage)
-                {
-                    <a class="page-link disabled" href="~/TSps/?productPage=@(Model.PagingInfo.currentPage + 1)">Next</a>
-                }
-                else
-                {
-                    <a class="page-link" href="~/TSps/?productPage=@(Model.PagingInfo.currentPage + 1)">Next</a>
-                }
-            </li>
-        </ul> *@
-
-        @* <div id="content"> *@
-            <ul class="pagination justify-content-end" style="float: right; width: 50%; margin-right: 15px;">
-            <li class="page-item">
-                @if (Model.PagingInfo.currentPage == 1)
-                {
-                    <a class="page-link disabled" href="~/TSps/?productPage=@(Model.PagingInfo.currentPage - 1)">Previous</a>
-                }
-                else
-                {
-                    <a class="page-link" href="~/TSps/?productPage=@(Model.PagingInfo.currentPage - 1)">Previous</a>
-                }
-            </li>
-
-            @for (int i = 1; i <= Model.PagingInfo.totalPage; i++)
-            {
-                <li class="page-item @(i == Model.PagingInfo.currentPage ? "active" : "")">
-                        <a class="page-link" href="~/TSps/?productPage=@i"  style="cursor: pointer">@i</a>
+                <li class="page-item @(i == Model.SearchPagingInfo.currentPage ? "active" : "")">
+                    <a class="page-link" href="~/TSps/Search?keyword=@Model.SearchPagingInfo.keyWord&productPage=@i" style="cursor: pointer">@i</a>
                 </li>
             }
 
             <li class="page-item">
-                @if (Model.PagingInfo.currentPage == Model.PagingInfo.totalPage)
+                @if (Model.SearchPagingInfo.currentPage == Model.SearchPagingInfo.totalPage)
                 {
-                    <a class="page-link disabled" href="~/TSps/?productPage=@(Model.PagingInfo.currentPage + 1)">Next</a>
+                    <a class="page-link disabled" href="~/TSps/Search?keyword=@Model.SearchPagingInfo.keyWord&productPage=@(Model.SearchPagingInfo.currentPage + 1)">Next</a>
                 }
                 else
                 {
-                    <a class="page-link" href="~/TSps/?productPage=@(Model.PagingInfo.currentPage + 1)">Next</a>
+                    <a class="page-link" href="~/TSps/Search?keyword=@Model.SearchPagingInfo.keyWord&productPage=@(Model.SearchPagingInfo.currentPage + 1)">Next</a>
                 }
             </li>
-            </ul>
-        @* </div> *@
+        </ul> *@
+
 
     </div>
 </div>
@@ -165,6 +166,7 @@
     .btn {
         float: left;
         margin-left: 15px;
+        margin-bottom: 15px;
     }
 
     .product-list {
@@ -179,14 +181,14 @@
     }
 </style>
 
-@section Paginate{
+@section PaginateSearch{
     <script>
         function loadPage(page, pageSize) {
             $.ajax({
-                url: '/TSps/Index',
+                url: '/TSps/Search',
                 data: { page: page, pageSize: pageSize },
                 success: function (data) {
-                    $('#content').html(data);
+                    $('#content-search').html(data);
                 },
                 error: function () {
                     alert('Có lỗi xảy ra khi tai trang.');

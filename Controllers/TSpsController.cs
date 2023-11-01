@@ -10,6 +10,7 @@ using Admin.Services;
 using PagedList;
 using Admin.Models.ViewModels;
 using System.Xml.Linq;
+using Admin.InputModels;
 
 namespace Admin.Controllers
 {
@@ -17,8 +18,8 @@ namespace Admin.Controllers
     {
         private readonly QLBanDTContext _context;
         private readonly ProductServices _productServices;
-        private readonly ImageServices _imageServices;
-        public int pageSize = 3;
+        /*private readonly ImageServices _imageServices;*/
+        public int pageSize = 2;
 
         public TSpsController(QLBanDTContext context, ProductServices productServices)
         {
@@ -52,18 +53,20 @@ namespace Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> Search(string keyword, int productPage = 1)
         {
-            return View("Index",
-                new ProductListViewModel
+            return View(
+                new SearchProductListViewModel
                 {
                     Products = _context.TSp.Include(t => t.MaHangNavigation).Include(t => t.MaTlNavigation)
-                    .Where(t => t.TenSp.Contains(keyword) || t.MaSp.Contains(keyword) 
-                    || t.MaHangNavigation.TenHang.Contains(keyword) || t.MaTlNavigation.TenTl.Contains(keyword))
-                    .Skip((productPage - 1) * pageSize).Take(pageSize),
-                    PagingInfo = new PagingInfo
+                    .Where(t => t.TenSp.Contains(keyword) || t.MaSp.Contains(keyword)
+                    || t.MaHangNavigation.TenHang.Contains(keyword) || t.MaTlNavigation.TenTl.Contains(keyword)),
+                    /*.Skip((productPage - 1) * pageSize).Take(pageSize),*/
+                    SearchPagingInfo = new SearchPagingInfo
                     {
                         itemsPerPage = pageSize,
                         currentPage = productPage,
                         totalItem = _context.TSp.Count(),
+                        keyWord = keyword,
+                        
                     }
                 }
             );
@@ -71,11 +74,29 @@ namespace Admin.Controllers
         }
         public async Task<IActionResult> Total()
         {
+
+
             ViewBag.TotalProduct = await _productServices.GetTotalProductAsync();
             ViewBag.TotalMoney = await _productServices.GetTotalMoneyAsync();
             ViewBag.Revenue = await _productServices.GetRevenueAsync();
             ViewBag.Profit = await _productServices.GetProfitAsync();
-            ViewBag.ProductSold = await _productServices.GetProductSold();
+
+            var MaSp = _productServices.GetTopProductsAsync();
+            var TenSp = _context.TSp.Where(t => t.MaSp == MaSp.ToString()).FirstOrDefaultAsync();
+            
+            var money = _productServices.GetMoneyofTopProductsAsync();
+            if (MaSp.ToString() == null)
+            {
+                ViewBag.TopProduct = "Không có sản phẩm nào";
+                ViewBag.TotalSales = "$0";
+            }
+            else
+            {
+                ViewBag.TopProduct = TenSp.ToString();
+                /*ViewBag.TotalSales = totalSales.ToString();*/
+            }
+
+
             return View();
         }
 
@@ -125,30 +146,35 @@ namespace Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MaSp,TenSp,MaTl,MaHang,DonGiaNhap,DonGiaBan,SoLuong,Anh")] TSp tSp)
+        public async Task<IActionResult> Create([Bind("MaSp,TenSp,MaTl,MaHang,DonGiaNhap,DonGiaBan,SoLuong,Anh")] TSp tSp/*, InputProducts inputProducts*/)
         {
-            var masp = _context;
+            /*var fileName = await _imageServices.SaveFileAsync(inputProducts.Anh);
+            tSp.Anh = fileName;*/
             if (ModelState.IsValid)
             {
-               
-                    _context.Add(tSp);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
-                
+
+                var product = _productServices.CreateProductAsync(tSp, tSp.MaSp);
+                return RedirectToAction(nameof(Index));
+
             }
-            /*var query = from c in _context.THoaDonNhaps
+            var query = from c in _context.THoaDonNhaps
                         join c1 in _context.TChiTietHdns on c.SoHdn equals c1.SoHdn
                         select new
                         {
                             sohdb = c.SoHdn,
                             masp = c1.MaSp
                         };
-            ViewData["MaSp"] = new SelectList(query.Select(t => t.masp).ToList());*/
+            ViewData["MaSp"] = new SelectList(query.Select(t => t.masp).ToList());
             ViewData["MaHang"] = new SelectList(_context.THangs, "MaHang", "TenHang", tSp.MaHang);
             ViewData["MaTl"] = new SelectList(_context.TTheLoais, "MaTL", "TenTl", tSp.MaTl);
             return View(tSp);
         }
-
+        /*public async Task<IActionResult> PostProduct([FromForm]InputProducts inputProducts)
+        {
+            var product = await _productServices.CreateProductAsync(inputProducts);
+            return CreatedAtAction(nameof(Create), new { id = product.MaSp } , product);
+        }
+*/
         // GET: TSps/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
