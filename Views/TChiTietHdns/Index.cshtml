@@ -5,56 +5,73 @@
     Layout = "~/Views/Shared/MyLayout.cshtml";
 }
 
-<h1>Index</h1>
+<div class="backgr-color" style="background-color: white; padding-top: 10px; border-radius: 5px; box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.1);">
+    <div>
+        <h1 class="invoiceInDetail-list">CHI TIẾT HÓA ĐƠN NHẬP</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Số hóa đơn
+                    </th>
+                    <th>
+                        Mã sản phẩm
+                    </th>
+                    <th>
+                        Số lượng
+                    </th>
+                    <th>
+                        Nhà cung cấp
+                    </th>
+                    <th>
+                        Khuyến mãi
+                    </th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SoHdn)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MaSpNavigation.MaSp)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Slnhap)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SoHdnNavigation.MaNccNavigation.TenNcc)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.KhuyenMai)
+                        </td>
+                        
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Slnhap)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.KhuyenMai)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MaSpNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SoHdnNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SoHdnNavigation.MaNccNavigation.TenNcc)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Slnhap)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.KhuyenMai)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MaSpNavigation.MaSp)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SoHdnNavigation.SoHdn)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SoHdnNavigation.MaNccNavigation.TenNcc)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<hr />
+<a asp-action="Create" class="btn btn-primary">Thêm chi tiết</a>
+<div>
+    @* <a asp-action="Index">Quay lại</a> *@
+    @Html.ActionLink("Quay lại", "Index", "THoaDonNhaps")
+</div>
+
+<style>
+    .btn {
+        float: left;
+        margin-left: 15px;
+    }
+
+    .invoiceInDetail-list {
+        margin-top: revert-layer;
+        text-align: center;
+        font-size: 2rem;
+    }
+</style>

@@ -41,17 +41,17 @@ namespace Admin.Services
             var productSold = await _context.TChiTietHdbs.Include(t => t.SoHdbNavigation).SumAsync(x => x.Slban);
             return (double)productSold;
         }
-        public async Task<TChiTietHdb> GetTopProducts()
+        /*public async Task<TChiTietHdb> GetTopProducts()
         {
-            /*var day =  _context.THoaDonBans.Select(x => x.NgayBan).ToList();
+            *//*var day =  _context.THoaDonBans.Select(x => x.NgayBan).ToList();
             foreach(var i in day)
             {
                 DateTime.Parse(i);
-            }*/
+            }*//*
             var query = from sp in _context.TSp
                         join chiTietHDB in _context.TChiTietHdbs on sp.MaSp equals chiTietHDB.MaSp
                         join hoaDonBan in _context.THoaDonBans on chiTietHDB.SoHdb equals hoaDonBan.SoHdb
-                        /*where DateTime.Parse(hoaDonBan.NgayBan).Year == DateTime.Now.Year*/
+                        *//*where DateTime.Parse(hoaDonBan.NgayBan).Year == DateTime.Now.Year*//*
                         group chiTietHDB by sp.MaSp into g
                         orderby g.Sum(x => x.Slban) descending
                         select new
@@ -60,8 +60,27 @@ namespace Admin.Services
                             TotalSales = g.Sum(x => x.Slban)
                         };
             var result = query.FirstOrDefault();
-            
+
             return result;
+        }*/
+
+        public async Task<string> GenerateSHDNAsync()
+        {
+            Random rd = new Random();
+            int rdNumber = rd.Next(1000, 9999);
+            int month = DateTime.Now.Month;
+            int day = DateTime.Now.Day;
+            var SoHDN = "HD" + month.ToString() + day.ToString() + rdNumber.ToString();
+            var sohdn = _context.THoaDonNhaps.Where(predicate: t => t.SoHdn == SoHDN)
+                                                   .Select(t => t.SoHdn)
+                                                   .ToList();
+            if (sohdn.Count() != 0)
+            {
+                SoHDN = "HD" + month.ToString() + day.ToString() + rd.Next(1000, 9999);
+
+            }
+            return (string)SoHDN;
         }
+
     }
 }
