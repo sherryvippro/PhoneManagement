@@ -19,7 +19,8 @@
             </div>
             <div class="form-group">
                 <label asp-for="MaSp" class="control-label"></label>
-                <select asp-for="MaSp" class ="form-control" asp-items="ViewBag.MaSp"></select>
+                <input asp-for="MaSp"class="form-control" />
+                <span asp-validation-for="MaSp" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Slnhap" class="control-label"></label>

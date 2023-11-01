@@ -1,5 +1,9 @@
 ﻿using Admin.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.VisualBasic;
+using System.ComponentModel;
+using System.Linq;
 
 namespace Admin.Services
 {
@@ -36,6 +40,28 @@ namespace Admin.Services
         {
             var productSold = await _context.TChiTietHdbs.Include(t => t.SoHdbNavigation).SumAsync(x => x.Slban);
             return (double)productSold;
+        }
+        public async Task<TChiTietHdb> GetTopProducts()
+        {
+            /*var day =  _context.THoaDonBans.Select(x => x.NgayBan).ToList();
+            foreach(var i in day)
+            {
+                DateTime.Parse(i);
+            }*/
+            var query = from sp in _context.TSp
+                        join chiTietHDB in _context.TChiTietHdbs on sp.MaSp equals chiTietHDB.MaSp
+                        join hoaDonBan in _context.THoaDonBans on chiTietHDB.SoHdb equals hoaDonBan.SoHdb
+                        /*where DateTime.Parse(hoaDonBan.NgayBan).Year == DateTime.Now.Year*/
+                        group chiTietHDB by sp.MaSp into g
+                        orderby g.Sum(x => x.Slban) descending
+                        select new
+                        {
+                            masp = g.Key,
+                            TotalSales = g.Sum(x => x.Slban)
+                        };
+            var result = query.FirstOrDefault();
+            
+            return result;
         }
     }
 }

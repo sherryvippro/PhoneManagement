@@ -1,6 +1,6 @@
 ﻿@using Admin.Models.ViewModels;
 @model ProductListViewModel
-
+@* @model IEnumerable<Admin.Models.TSp> *@
 
 
 @{
@@ -13,80 +13,91 @@
 @* <h2>QUẢN LÝ SẢN PHẨM/Sản phẩm</h2> *@
 <div class="backgr-color" style="background-color: white; padding-top: 10px; border-radius: 5px; box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.1);">
     <h1 class="product-list">DANH MỤC SẢN PHẨM</h1>
-   @*  <hr />
+    @*  <hr />
     <div class="search-wrapper">
-        <i class="search-icon-wrapper typcn typcn-zoom-outline"></i>
-        <input type="text" placeholder="Search...">
+    <i class="search-icon-wrapper typcn typcn-zoom-outline"></i>
+    <input type="text" placeholder="Search...">
     </div> *@
     <hr />
     <div class="table-responsive">
-        <table class="align-middle text-truncate mb-0 table table-borderless table-hover">
-            <thead>
-                <tr>
-                    <th>
-                        Tên sản phẩm
-                    </th>
-                    <th>
-                        Đơn giá nhập
-                    </th>
-                    <th>
-                        Đơn giá bán
-                    </th>
-                    <th>
-                        Số lượng
-                    </th>
-                    <th>
-                        Ảnh
-                    </th>
-                    <th>
-                        Tên hãng
-                    </th>
-                    <th>
-                        Tên thể loại
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.Products)
-                {
+        <div id="content">
+            <table class="align-middle text-truncate mb-0 table table-borderless table-hover">
+                <thead>
                     <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.TenSp)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.DonGiaNhap)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.DonGiaBan)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.SoLuong)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Anh)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.MaHangNavigation.TenHang)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.MaTlNavigation.TenTl)
-                        </td>
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@item.MaSp">Sửa</a> |
-                            <a asp-action="Details" asp-route-id="@item.MaSp">Chi tiết</a> |
-                            <a asp-action="Delete" asp-route-id="@item.MaSp">Xóa</a>
-                        </td>
+                        <th>
+                            Mã sản phẩm
+                        </th>
+                        <th>
+                            Tên sản phẩm
+                        </th>
+                        <th>
+                            Đơn giá nhập
+                        </th>
+                        <th>
+                            Đơn giá bán
+                        </th>
+                        <th>
+                            Số lượng
+                        </th>
+                        <th>
+                            Ảnh
+                        </th>
+                        <th>
+                            Tên hãng
+                        </th>
+                        <th>
+                            Tên thể loại
+                        </th>
+                        <th>Chức năng</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Products)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MaSp)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TenSp)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DonGiaNhap)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DonGiaBan)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SoLuong)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Anh)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MaHangNavigation.TenHang)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MaTlNavigation.TenTl)
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.MaSp">Sửa</a> |
+                                <a asp-action="Details" asp-route-id="@item.MaSp">Chi tiết</a> |
+                                <a asp-action="Delete" asp-route-id="@item.MaSp">Xóa</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
         <hr />
         <a asp-action="Create" class="btn btn-primary">Thêm mới</a>
 
+        <div id="pagination">
+        </div>
+
         <ul class="pagination justify-content-end" style="float: right; width: 50%; margin-right: 15px;">
             <li class="page-item">
-                @if(Model.PagingInfo.currentPage == 1)
+                @if (Model.PagingInfo.currentPage == 1)
                 {
                     <a class="page-link disabled" href="~/TSps/?productPage=@(Model.PagingInfo.currentPage - 1)">Previous</a>
                 }
@@ -95,8 +106,8 @@
                     <a class="page-link" href="~/TSps/?productPage=@(Model.PagingInfo.currentPage - 1)">Previous</a>
                 }
             </li>
-            
-            @for(int i = 1; i <= Model.PagingInfo.totalPage; i++)
+
+            @for (int i = 1; i <= Model.PagingInfo.totalPage; i++)
             {
                 <li class="page-item"><a class="page-link" href="~/TSps/?productPage=@i">@i</a></li>
             }
@@ -129,8 +140,46 @@
         text-align: center;
         font-size: 2rem;
     }
-    a.disabled{
+
+    a.disabled {
         pointer-events: none;
         cursor: default;
     }
 </style>
+
+@* @section Pagination{
+    <script>
+        (document).ready(function)(){
+            var currentPage = 1;
+            var itemsPerPage = 10;
+            function loadPage(page) {
+                $.ajax({
+                    url: 'TSps/Index',
+                    method: 'POST',
+                    data: { page: page, itemsPerPage: itemsPerPage },
+                    success: function (data) {
+                        $('div#content').html(data);
+                    }
+                });
+            }
+            function loadPagination() {
+                $.ajax({
+                    url: 'TSps/Index',
+                    method: 'GET',
+                    success: function (data) {
+                        var totalPages = Math.ceil(data / itemsPerPage);
+                        var pagination = ' ';
+                        for (var i = 1; i <= totalPages; i++) {
+                            pagination += '<button class="page-btn" data-page="' + i + '">' + i + '</button>';
+                        }
+                        $('#pagination').html(pagination);
+                        $('.page-btn').on('click', function () {
+                            currentPage = $(this).data('page');
+                            loadPage(currentPage);
+                        });
+                    }
+                });
+            }
+        }
+    </script>
+} *@

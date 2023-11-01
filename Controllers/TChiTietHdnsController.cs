@@ -49,7 +49,7 @@ namespace Admin.Controllers
         // GET: TChiTietHdns/Create
         public IActionResult Create()
         {
-            ViewData["MaSp"] = new SelectList(_context.TSp, "MaSp", "TenSp");
+            /*ViewData["MaSp"] = new SelectList(_context.TSp, "MaSp", "TenSp");*/
             ViewData["SoHdn"] = new SelectList(_context.THoaDonNhaps, "SoHdn", "SoHdn");
             /*ViewData["MaNcc"] = new SelectList(_context.THoaDonNhaps, "MaNcc", "TenNcc");*/
             return View();
@@ -68,11 +68,11 @@ namespace Admin.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MaSp"] = new SelectList(_context.TSp, "MaSp", "TenSp", tChiTietHdn.MaSp);
+            /*ViewData["MaSp"] = new SelectList(_context.TSp, "MaSp", "TenSp", tChiTietHdn.MaSp);*/
             ViewData["SoHdn"] = new SelectList(_context.THoaDonNhaps, "SoHdn", "SoHdn", tChiTietHdn.SoHdn);
 
 
-            return View("Index", tChiTietHdn);
+            return RedirectToAction("Index", new {id = tChiTietHdn.SoHdn});
         }
 
         // GET: TChiTietHdns/Edit/5
