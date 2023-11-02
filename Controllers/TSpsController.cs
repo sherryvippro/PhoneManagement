@@ -31,6 +31,27 @@ namespace Admin.Controllers
         // GET: TSps
         public async Task<IActionResult> Index(int productPage = 1)
         {
+            ViewBag.TotalProduct = await _productServices.GetTotalProductAsync();
+            ViewBag.TotalMoney = await _productServices.GetTotalMoneyAsync();
+            ViewBag.Revenue = await _productServices.GetRevenueAsync();
+            ViewBag.Profit = await _productServices.GetProfitAsync();
+            ViewBag.ProductSold = await _productServices.GetProductSoldAsync();
+
+            var MaSp = await _productServices.GetTopProductsAsync();
+            var TenSp = await _context.TSp.Where(x => x.MaSp == MaSp.ToString()).Select(x => x.TenSp).FirstOrDefaultAsync();
+
+            var money = await _productServices.GetMoneyofTopProductsAsync();
+
+            if (MaSp == null)
+            {
+                ViewBag.TopProduct = "Không có sản phẩm nào";
+                ViewBag.TotalSales = "$0";
+            }
+            else
+            {
+                ViewBag.TopProduct = TenSp;
+                ViewBag.TotalSales = money;
+            }
             /*ar products = _context.TSp.Include(t => t.MaHangNavigation).Include(t => t.MaTlNavigation).ToList();
             return View(products);*/
             /* hàm skip bỏ qua số trang = số trang hiện tại * số lượng item trên mỗi trang
@@ -58,8 +79,8 @@ namespace Admin.Controllers
                 {
                     Products = _context.TSp.Include(t => t.MaHangNavigation).Include(t => t.MaTlNavigation)
                     .Where(t => t.TenSp.Contains(keyword) || t.MaSp.Contains(keyword)
-                    || t.MaHangNavigation.TenHang.Contains(keyword) || t.MaTlNavigation.TenTl.Contains(keyword)),
-                    /*.Skip((productPage - 1) * pageSize).Take(pageSize),*/
+                    || t.MaHangNavigation.TenHang.Contains(keyword) || t.MaTlNavigation.TenTl.Contains(keyword))
+                    .Skip((productPage - 1) * pageSize).Take(pageSize),
                     SearchPagingInfo = new SearchPagingInfo
                     {
                         itemsPerPage = pageSize,
@@ -81,19 +102,20 @@ namespace Admin.Controllers
             ViewBag.Revenue = await _productServices.GetRevenueAsync();
             ViewBag.Profit = await _productServices.GetProfitAsync();
 
-            var MaSp = _productServices.GetTopProductsAsync();
-            var TenSp = _context.TSp.Where(t => t.MaSp == MaSp.ToString()).FirstOrDefaultAsync();
+            var MaSp = await _productServices.GetTopProductsAsync();
+            var TenSp = await _context.TSp.Where(x => x.MaSp == MaSp.ToString()).Select(x => x.TenSp).FirstOrDefaultAsync();
             
-            var money = _productServices.GetMoneyofTopProductsAsync();
-            if (MaSp.ToString() == null)
+            var money = await _productServices.GetMoneyofTopProductsAsync();
+
+            if (MaSp == null)
             {
                 ViewBag.TopProduct = "Không có sản phẩm nào";
                 ViewBag.TotalSales = "$0";
             }
             else
             {
-                ViewBag.TopProduct = TenSp.ToString();
-                /*ViewBag.TotalSales = totalSales.ToString();*/
+                ViewBag.TopProduct = TenSp;
+                ViewBag.TotalSales = money;
             }
 
 

@@ -5,90 +5,40 @@
     Layout = "~/Views/Shared/MyLayout.cshtml";
 }
 
+<h1>Create</h1>
 
-
-<h3>Tạo chi tiết hóa đơn nhập</h3>
+<h4>TChiTietHdn</h4>
 <hr />
-<form asp-action="Create">
-    <div class="row">
-        
-            <div class="col-md-12">
-
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="SoHdn" class="control-label">Số hóa đơn</label>
-                    <input asp-for="SoHdn" class="form-control" />
-                    <span asp-validation-for="SoHdn" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="MaSp" class="control-label">Sản phẩm</label>
-                    <select asp-for="MaSp" class="form-control" asp-items="ViewBag.MaSp"></select>
-                </div>
-
-
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="SoHdn" class="control-label"></label>
+                <select asp-for="SoHdn" class ="form-control" asp-items="ViewBag.SoHdn"></select>
             </div>
-<<<<<<< HEAD
             <div class="form-group">
                 <label asp-for="MaSp" class="control-label"></label>
-                <input asp-for="MaSp"class="form-control" />
-                <span asp-validation-for="MaSp" class="text-danger"></span>
-=======
-            <div class="col-md-12">
-
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Slnhap" class="control-label">Số lượng</label>
-                    <input asp-for="Slnhap" class="form-control" />
-                    <span asp-validation-for="Slnhap" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="KhuyenMai" class="control-label">Khuyến mãi</label>
-                    <input asp-for="KhuyenMai" class="form-control" />
-                    <span asp-validation-for="KhuyenMai" class="text-danger"></span>
-                </div>
-
->>>>>>> 1b3d4cb55c1ebe127b06e05e0e6729106241e1fe
+                <select asp-for="MaSp" class ="form-control" asp-items="ViewBag.MaSp"></select>
             </div>
-        
-        <hr />
-        <div class="col-md-6">
             <div class="form-group">
-                <input type="submit" value="Create" class="create btn btn-primary" />
+                <label asp-for="Slnhap" class="control-label"></label>
+                <input asp-for="Slnhap" class="form-control" />
+                <span asp-validation-for="Slnhap" class="text-danger"></span>
             </div>
-        </div>
+            <div class="form-group">
+                <label asp-for="KhuyenMai" class="control-label"></label>
+                <input asp-for="KhuyenMai" class="form-control" />
+                <span asp-validation-for="KhuyenMai" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
     </div>
-</form>
-
-
-<div>
-    
-        @Html.ActionLink("Quay lại", "Index", "TChiTietHdns")
 </div>
 
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-}
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
 
-<style>
-    .btn {
-        float: left;
-        margin-left: 15px;
-    }
-
-    .invoiceOut-list {
-        margin-top: revert-layer;
-        text-align: center;
-        font-size: 2rem;
-    }
-
-    .create {
-        margin-top: 1rem;
-        margin-bottom: 1rem;
-    }
-
-    .add {
-        margin-bottom: 1rem;
-    }
-</style>

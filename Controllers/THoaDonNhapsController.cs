@@ -13,12 +13,12 @@ namespace Admin.Controllers
     public class THoaDonNhapsController : Controller
     {
         private readonly QLBanDTContext _context;
-        private readonly ProductServices _productServices;
+        private readonly InvoiceServices _invoiceServices;
 
-        public THoaDonNhapsController(QLBanDTContext context, ProductServices productServices)
+        public THoaDonNhapsController(QLBanDTContext context, InvoiceServices invoiceServices)
         {
             _context = context;
-            _productServices = productServices;
+            _invoiceServices = invoiceServices;
         }
 
         // GET: THoaDonNhaps
@@ -50,7 +50,7 @@ namespace Admin.Controllers
         // GET: THoaDonNhaps/Create
         public async Task<IActionResult> Create()
         {
-            ViewBag.SoHDN = await _productServices.GenerateSHDNAsync();
+            ViewBag.SoHDN = await _invoiceServices.GenerateSHDNAsync();
             ViewData["MaNcc"] = new SelectList(_context.TNhaCungCaps, "MaNcc", "TenNcc");
             return View();
         }
@@ -68,7 +68,7 @@ namespace Admin.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewBag.SoHDN = await _productServices.GenerateSHDNAsync();
+            ViewBag.SoHDN = await _invoiceServices.GenerateSHDNAsync();
             ViewData["MaNcc"] = new SelectList(_context.TNhaCungCaps, "MaNcc", "TenNcc", tHoaDonNhap.MaNcc);
             return View(tHoaDonNhap);
         }

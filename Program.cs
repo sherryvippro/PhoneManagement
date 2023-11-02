@@ -12,6 +12,7 @@ builder.Services.AddDbContext<QLBanDTContext>(options => options.UseSqlServer
 
 //builder.Services.AddSingleton<QLBanDTContext>();
 builder.Services.AddTransient<ProductServices>();
+builder.Services.AddTransient<InvoiceServices>();
 builder.Services.AddTransient<ImageServices>();
 
 // Add services to the container.
