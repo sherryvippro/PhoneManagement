@@ -45,7 +45,7 @@
                         </td>
                         
                         <td>
-                            @Html.ActionLink("Details", "Index", "TChiTietHdns", new { id = item.SoHdn })
+                            @Html.ActionLink("Chi tiết", "Index", "TChiTietHdns", new { id = item.SoHdn})
                         </td>
                     </tr>
                 }
@@ -57,6 +57,7 @@
 <p>
     <a asp-action="Create" class="btn btn-primary">Thêm hóa đơn</a>
 </p>
+
 
 <style>
     .btn {

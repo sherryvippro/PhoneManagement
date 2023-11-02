@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Admin.Models;
 using Admin.Services;
+using SQLitePCL;
 
 namespace Admin.Controllers
 {
@@ -25,6 +26,8 @@ namespace Admin.Controllers
         public async Task<IActionResult> Index()
         {
             var qLBanDTContext = _context.THoaDonNhaps.Include(t => t.MaNccNavigation);
+            
+            _context.SaveChanges();
             return View(await qLBanDTContext.ToListAsync());
         }
 
@@ -39,10 +42,13 @@ namespace Admin.Controllers
             var tHoaDonNhap = await _context.THoaDonNhaps
                 .Include(t => t.MaNccNavigation)
                 .FirstOrDefaultAsync(m => m.SoHdn == id);
+            
             if (tHoaDonNhap == null)
             {
                 return NotFound();
             }
+            ViewBag.HDN = tHoaDonNhap.SoHdn;
+
 
             return View(tHoaDonNhap);
         }
@@ -169,6 +175,6 @@ namespace Admin.Controllers
           return (_context.THoaDonNhaps?.Any(e => e.SoHdn == id)).GetValueOrDefault();
         }
 
-        
+
     }
 }

@@ -6,12 +6,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Admin.Models;
+using Admin.Services;
 
 namespace Admin.Controllers
 {
     public class TChiTietHdnsController : Controller
     {
         private readonly QLBanDTContext _context;
+        private readonly InvoiceServices _invoiceServices;
 
         public TChiTietHdnsController(QLBanDTContext context)
         {
@@ -21,7 +23,17 @@ namespace Admin.Controllers
         // GET: TChiTietHdns
         public async Task<IActionResult> Index()
         {
-            var qLBanDTContext = _context.TChiTietHdns.Include(t => t.MaSpNavigation).Include(t => t.SoHdnNavigation);
+            ViewBag.TT = 0;
+            var qLBanDTContext = _context.TChiTietHdns.Include(t => t.MaSpNavigation)
+                .Include(t => t.SoHdnNavigation)
+                .Include(t => t.SoHdnNavigation.MaNccNavigation).Where(t => t.SoHdn == id);
+
+            foreach (var item in qLBanDTContext)
+            {
+                ViewBag.TT += item.MaSpNavigation.DonGiaNhap * item.Slnhap;
+            }
+
+            _context.SaveChanges();
             return View(await qLBanDTContext.ToListAsync());
         }
 
@@ -60,7 +72,19 @@ namespace Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("SoHdn,MaSp,Slnhap,KhuyenMai")] TChiTietHdn tChiTietHdn)
         {
-            if (ModelState.IsValid)
+            /*if (ModelState.IsValid)
+            {
+                _context.Add(tChiTietHdn);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["MaSp"] = new SelectList(_context.TSp, "MaSp", "TenSp", tChiTietHdn.MaSp);
+            ViewData["SoHdn"] = new SelectList(_context.THoaDonNhaps, "SoHdn", "SoHdn", tChiTietHdn.SoHdn);
+
+
+            return View("Index", tChiTietHdn);*/
+
+            /*if (ModelState.IsValid)
             {
                 _context.Add(tChiTietHdn);
                 await _context.SaveChangesAsync();
@@ -68,7 +92,20 @@ namespace Admin.Controllers
             }
             ViewData["MaSp"] = new SelectList(_context.TSp, "MaSp", "MaSp", tChiTietHdn.MaSp);
             ViewData["SoHdn"] = new SelectList(_context.THoaDonNhaps, "SoHdn", "SoHdn", tChiTietHdn.SoHdn);
-            return View(tChiTietHdn);
+
+            // Load a list of TChiTietHdn to display in the view
+            
+            return RedirectToAction("Index", new {id = tChiTietHdn.SoHdn});*/
+
+            if (ModelState.IsValid)
+            {
+                var Hdn = _invoiceServices.createInvoiceIn(tChiTietHdn,tChiTietHdn.MaSp);
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            ViewData["SoHdn"] = new SelectList(_context.THoaDonNhaps, "SoHdn", "SoHdn", tChiTietHdn.SoHdn);
+            return RedirectToAction("Index", new { id = tChiTietHdn.SoHdn });
         }
 
         // GET: TChiTietHdns/Edit/5

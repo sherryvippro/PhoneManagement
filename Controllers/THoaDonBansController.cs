@@ -35,7 +35,7 @@ namespace Admin.Controllers
             return View(
                 new InvoiceOutListViewModel
                 {
-                    InvoiceOut = _context.TChiTietHdbs.Include(t => t.SoHdbNavigation)
+                    InvoiceOut = _context.TChiTietHdbs.Include(t => t.SoHdbNavigation).Include(t => t.SoHdbNavigation.MaKhNavigation)
                     .Skip((invoiceOutPage - 1) * pageSize).Take(pageSize),
                     PagingInfo = new PagingInfo
                     {
@@ -45,6 +45,7 @@ namespace Admin.Controllers
                     }
                 }
             ); ;
+
         }
 
         // GET: THoaDonBans/Details/5
@@ -86,7 +87,7 @@ namespace Admin.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MaKh"] = new SelectList(_context.TKhachHangs, "MaKh", "MaKh", tHoaDonBan.MaKh);
+            ViewData["MaKh"] = new SelectList(_context.TKhachHangs, "MaKh", "MaKh", tHoaDonBan.MaNguoiDung);
             return View(tHoaDonBan);
         }
 
@@ -103,7 +104,7 @@ namespace Admin.Controllers
             {
                 return NotFound();
             }
-            ViewData["MaKh"] = new SelectList(_context.TKhachHangs, "MaKh", "MaKh", tHoaDonBan.MaKh);
+            ViewData["MaKh"] = new SelectList(_context.TKhachHangs, "MaKh", "MaKh", tHoaDonBan.MaNguoiDung);
             return View(tHoaDonBan);
         }
 
@@ -139,7 +140,7 @@ namespace Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MaKh"] = new SelectList(_context.TKhachHangs, "MaKh", "MaKh", tHoaDonBan.MaKh);
+            ViewData["MaKh"] = new SelectList(_context.TKhachHangs, "MaKh", "MaKh", tHoaDonBan.MaNguoiDung);
             return View(tHoaDonBan);
         }
 

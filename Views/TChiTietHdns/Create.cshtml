@@ -9,18 +9,25 @@
 
 <h4>TChiTietHdn</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="SoHdn" class="control-label"></label>
-                <select asp-for="SoHdn" class ="form-control" asp-items="ViewBag.SoHdn"></select>
+<form asp-action="Create">
+    <div class="row">
+        
+            <div class="col-md-12">
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="SoHdn" class="control-label">Số hóa đơn</label>
+                    <select asp-for="SoHdn" class="form-control" asp-items="ViewBag.SoHDN"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="MaSp" class="control-label">Sản phẩm</label>
+                    <input asp-for="MaSp" class="form-control" />
+                    <span asp-validation-for="MaSp" class="text-danger"></span>
+                </div>
+
+
             </div>
-            <div class="form-group">
-                <label asp-for="MaSp" class="control-label"></label>
-                <select asp-for="MaSp" class ="form-control" asp-items="ViewBag.MaSp"></select>
-            </div>
+<<<<<<< HEAD
             <div class="form-group">
                 <label asp-for="Slnhap" class="control-label"></label>
                 <input asp-for="Slnhap" class="form-control" />
@@ -39,6 +46,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+
+    @Html.ActionLink("Quay lại", "Index", "TChiTietHdns", new { id = ViewBag.HDN})
 </div>
 
