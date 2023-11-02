@@ -5,60 +5,90 @@
     Layout = "~/Views/Shared/MyLayout.cshtml";
 }
 
-<h1>Delete</h1>
+<body>
+    <div class="backgr-color" style="background-color: white; padding-top: 10px; border-radius: 5px; box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.1);">
+        <h1 class="product-detail">Bạn có muốn xóa sản phẩm này không?</h1>
 
-<h3>Bạn có muốn xóa sản phẩm này không?</h3>
-<div>
-    <h4>TSp</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TenSp)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TenSp)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DonGiaNhap)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DonGiaNhap)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DonGiaBan)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DonGiaBan)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SoLuong)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SoLuong)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Anh)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Anh)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MaHangNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MaHangNavigation.MaHang)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.MaTlNavigation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MaTlNavigation.MaTl)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="MaSp" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
-</div>
+        <hr />
+
+        <dl class="row">
+            <dt class="col-sm-2">
+                Mã sản phẩm
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.MaSp)
+            </dd>
+            <dt class="col-sm-2">
+                Tên sản phẩm
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.TenSp)
+            </dd>
+            <dt class="col-sm-2">
+                Đơn giá nhập
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.DonGiaNhap)
+            </dd>
+            <dt class="col-sm-2">
+                Đơn giá bán
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.DonGiaBan)
+            </dd>
+            <dt class="col-sm-2">
+                Số lượng
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.SoLuong)
+            </dd>
+            <dt class="col-sm-2">
+                Ảnh
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Anh)
+            </dd>
+            <dt class="col-sm-2">
+                Mã hãng
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.MaHang)
+            </dd>
+            <dt class="col-sm-2">
+                Tên hãng
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.MaHangNavigation.TenHang)
+            </dd>
+            <dt class="col-sm-2">
+                Mã thể loại
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.MaTl)
+            </dd>
+            <dt class="col-sm-2">
+                Tên thể loại
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.MaTlNavigation.TenTl)
+            </dd>
+        </dl>
+    </div>
+</body>
+<style>
+    .product-detail {
+        margin-top: revert-layer;
+        text-align: center;
+        font-size: 2rem;
+    }
+    .backgr-color .row{
+        margin-left: 10px;
+    }
+</style>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="MaSp" />
+    <input type="submit" value="Xóa" class="btn btn-danger" /> |
+    <a asp-action="Index">Quay lại</a>
+</form>
+

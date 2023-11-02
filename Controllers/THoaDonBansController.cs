@@ -87,7 +87,7 @@ namespace Admin.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MaKh"] = new SelectList(_context.TKhachHangs, "MaKh", "MaKh", tHoaDonBan.MaKh);
+            ViewData["MaKh"] = new SelectList(_context.TKhachHangs, "MaKh", "MaKh", tHoaDonBan.MaNguoiDung);
             return View(tHoaDonBan);
         }
 
@@ -104,7 +104,7 @@ namespace Admin.Controllers
             {
                 return NotFound();
             }
-            ViewData["MaKh"] = new SelectList(_context.TKhachHangs, "MaKh", "MaKh", tHoaDonBan.MaKh);
+            ViewData["MaKh"] = new SelectList(_context.TKhachHangs, "MaKh", "MaKh", tHoaDonBan.MaNguoiDung);
             return View(tHoaDonBan);
         }
 
@@ -140,7 +140,7 @@ namespace Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MaKh"] = new SelectList(_context.TKhachHangs, "MaKh", "MaKh", tHoaDonBan.MaKh);
+            ViewData["MaKh"] = new SelectList(_context.TKhachHangs, "MaKh", "MaKh", tHoaDonBan.MaNguoiDung);
             return View(tHoaDonBan);
         }
 

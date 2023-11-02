@@ -9,6 +9,7 @@ using Admin.Models;
 using Admin.Services;
 using PagedList;
 using Admin.Models.ViewModels;
+using System.Xml.Linq;
 
 namespace Admin.Controllers
 {
@@ -16,17 +17,23 @@ namespace Admin.Controllers
     {
         private readonly QLBanDTContext _context;
         private readonly ProductServices _productServices;
-        public int pageSize = 8;
+        private readonly ImageServices _imageServices;
+        public int pageSize = 3;
 
         public TSpsController(QLBanDTContext context, ProductServices productServices)
         {
             _context = context;
             _productServices = productServices;
+            /*_imageServices = imageServices;*/
         }
 
         // GET: TSps
         public async Task<IActionResult> Index(int productPage = 1)
         {
+            /*ar products = _context.TSp.Include(t => t.MaHangNavigation).Include(t => t.MaTlNavigation).ToList();
+            return View(products);*/
+            /* hàm skip bỏ qua số trang = số trang hiện tại * số lượng item trên mỗi trang
+             * hàm take để lấy ra trang tiếp theo với số lượng bản ghi = pagesize*/
             return View(
                 new ProductListViewModel
                 {
@@ -88,18 +95,28 @@ namespace Admin.Controllers
             {
                 return NotFound();
             }
-
+            ViewData["MaHang"] = new SelectList(_context.THangs, "MaHang", "TenHang");
+            ViewData["MaTl"] = new SelectList(_context.TTheLoais, "MaTl", "TenTl");
             return View(tSp);
         }
 
         // GET: TSps/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             /*var MaTl = (from tSp in _context.TSp
                         join tTl in _context.TTheLoais on tSp.MaTl equals tTl.MaTl
                         select new { tTl.MaTl, tTl.TenTl });*/
+            var query = from c in _context.THoaDonNhaps
+                        join c1 in _context.TChiTietHdns on c.SoHdn equals c1.SoHdn
+                        select new
+                        {
+                            sohdn = c.SoHdn,
+                            masp = c1.MaSp
+                        };
+            ViewData["MaSp"] = new SelectList(query.Select(t => t.masp).ToList());
             ViewData["MaHang"] = new SelectList(_context.THangs, "MaHang", "TenHang");
             ViewData["MaTl"] = new SelectList(_context.TTheLoais, "MaTl", "TenTl");
+
             return View();
         }
 
@@ -110,12 +127,23 @@ namespace Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("MaSp,TenSp,MaTl,MaHang,DonGiaNhap,DonGiaBan,SoLuong,Anh")] TSp tSp)
         {
+            var masp = _context;
             if (ModelState.IsValid)
             {
-                _context.Add(tSp);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+               
+                    _context.Add(tSp);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                
             }
+            /*var query = from c in _context.THoaDonNhaps
+                        join c1 in _context.TChiTietHdns on c.SoHdn equals c1.SoHdn
+                        select new
+                        {
+                            sohdb = c.SoHdn,
+                            masp = c1.MaSp
+                        };
+            ViewData["MaSp"] = new SelectList(query.Select(t => t.masp).ToList());*/
             ViewData["MaHang"] = new SelectList(_context.THangs, "MaHang", "TenHang", tSp.MaHang);
             ViewData["MaTl"] = new SelectList(_context.TTheLoais, "MaTL", "TenTl", tSp.MaTl);
             return View(tSp);
@@ -206,8 +234,10 @@ namespace Admin.Controllers
                 return Problem("Entity set 'QLBanDTContext.TSp'  is null.");
             }
             var tSp = await _context.TSp.FindAsync(id);
+            var tChiTietHDN = await _context.TChiTietHdns.Where(x => x.MaSp == id).ToListAsync();
             if (tSp != null)
             {
+                _context.TChiTietHdns.RemoveRange(tChiTietHDN);
                 _context.TSp.Remove(tSp);
             }
 

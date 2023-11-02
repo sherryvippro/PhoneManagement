@@ -61,7 +61,7 @@ namespace Admin.Controllers
         public IActionResult Create()
         {
             ViewData["MaSp"] = new SelectList(_context.TSp, "MaSp", "TenSp");
-            ViewData["SoHdn"] = new SelectList(_context.TChiTietHdns, "SoHdn", "SoHdn");
+            ViewData["SoHdn"] = new SelectList(_context.THoaDonNhaps, "SoHdn", "SoHdn");
             /*ViewData["MaNcc"] = new SelectList(_context.THoaDonNhaps, "MaNcc", "TenNcc");*/
             return View();
         }
@@ -91,8 +91,6 @@ namespace Admin.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-
-            // Load your dropdown data
             ViewData["MaSp"] = new SelectList(_context.TSp, "MaSp", "TenSp", tChiTietHdn.MaSp);
             ViewData["SoHdn"] = new SelectList(_context.THoaDonNhaps, "SoHdn", "SoHdn", tChiTietHdn.SoHdn);
 

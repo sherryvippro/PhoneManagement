@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -55,7 +55,7 @@ namespace Admin.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MaKh,TenKh,GioiTinh,DiaChi,DienThoai,Email")] TKhachHang tKhachHang)
+        public async Task<IActionResult> Create([Bind("MaKh,TenKh,GioiTinh,DiaChi,DienThoai,Email")]  tKhachHang)
         {
             if (ModelState.IsValid)
             {
@@ -160,3 +160,4 @@ namespace Admin.Controllers
         }
     }
 }
+*/
