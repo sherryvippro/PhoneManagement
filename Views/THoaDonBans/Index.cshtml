@@ -1,5 +1,7 @@
-﻿@using Admin.Models.ViewModels;
-@model InvoiceOutListViewModel
+﻿
+@* @model IEnumerable<Admin.Models.THoaDonBan> *@
+@using Admin.Models.ViewModels;
+@model InvoiceOutListViewModel;
 
 @{
     ViewData["Title"] = "Index";
@@ -38,7 +40,7 @@
                             @Html.DisplayFor(modelItem => item.SoHdbNavigation.NgayBan)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.SoHdbNavigation.MaKhNavigation.TenKh)
+                            @Html.DisplayFor(modelItem => item.SoHdbNavigation.MaKhNavigation)
                         </td>
                         @* <td>
                     @Html.DisplayFor(modelItem => item.Slban)
@@ -52,8 +54,8 @@
 
 
                         <td>
-                            
-                            <a asp-action="Details" asp-route-id="@item.SoHdb">Details</a> |
+
+                            @Html.ActionLink("Chi tiết","Index", "TChiTietHdbs", new { id = item.SoHdb})
                             
                         </td>
                     </tr>
@@ -63,8 +65,8 @@
         <hr />
        
 
-        <ul class="pagination justify-content-end" style="float: right; width: 50%; margin-right: 15px;">
-            <li class="page-item"><a class="page-link" href="~/TSps/?productPage=productPage-1">Previous</a></li>
+         <ul class="pagination justify-content-end" style="float: right; width: 50%; margin-right: 15px;">
+            <li class="page-item"><a class="page-link" href="~/ThoaDonBans/?productPage=productPage-1">Previous</a></li>
 
             @for (int i = 1; i <= Model.PagingInfo.totalPage; i++)
             {
@@ -75,6 +77,24 @@
         </ul>
     </div>
 </div>
+
+@section Paginate{
+    <script>
+        function loadPage(page, pageSize){
+            $.ajax({
+                URL: '/THoaDonBanController/Index',
+                data: {page: page, pageSize: pageSize },
+                success: function (data) {
+                    $('content').html(data);
+                },
+                error: function () {
+                    alert('Có lõi xảy ra khi tải trang.')
+                }
+            })
+        }
+    </script>
+}
+
 
 <style>
     .btn {

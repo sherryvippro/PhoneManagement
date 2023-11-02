@@ -7,24 +7,27 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Admin.Models;
 using Admin.Services;
+using SQLitePCL;
 
 namespace Admin.Controllers
 {
     public class THoaDonNhapsController : Controller
     {
         private readonly QLBanDTContext _context;
-        private readonly ProductServices _productServices;
+        private readonly InvoiceServices _invoiceServices;
 
-        public THoaDonNhapsController(QLBanDTContext context, ProductServices productServices)
+        public THoaDonNhapsController(QLBanDTContext context, InvoiceServices invoiceServices)
         {
             _context = context;
-            _productServices = productServices;
+            _invoiceServices = invoiceServices;
         }
 
         // GET: THoaDonNhaps
         public async Task<IActionResult> Index()
         {
             var qLBanDTContext = _context.THoaDonNhaps.Include(t => t.MaNccNavigation);
+            
+            _context.SaveChanges();
             return View(await qLBanDTContext.ToListAsync());
         }
 
@@ -39,10 +42,13 @@ namespace Admin.Controllers
             var tHoaDonNhap = await _context.THoaDonNhaps
                 .Include(t => t.MaNccNavigation)
                 .FirstOrDefaultAsync(m => m.SoHdn == id);
+            
             if (tHoaDonNhap == null)
             {
                 return NotFound();
             }
+            ViewBag.HDN = tHoaDonNhap.SoHdn;
+
 
             return View(tHoaDonNhap);
         }
@@ -50,7 +56,7 @@ namespace Admin.Controllers
         // GET: THoaDonNhaps/Create
         public async Task<IActionResult> Create()
         {
-            ViewBag.SoHDN = await _productServices.GenerateSHDNAsync();
+            ViewBag.SoHDN = await _invoiceServices.GenerateSHDNAsync();
             ViewData["MaNcc"] = new SelectList(_context.TNhaCungCaps, "MaNcc", "TenNcc");
             return View();
         }
@@ -68,7 +74,7 @@ namespace Admin.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewBag.SoHDN = await _productServices.GenerateSHDNAsync();
+            ViewBag.SoHDN = await _invoiceServices.GenerateSHDNAsync();
             ViewData["MaNcc"] = new SelectList(_context.TNhaCungCaps, "MaNcc", "TenNcc", tHoaDonNhap.MaNcc);
             return View(tHoaDonNhap);
         }
@@ -169,6 +175,6 @@ namespace Admin.Controllers
           return (_context.THoaDonNhaps?.Any(e => e.SoHdn == id)).GetValueOrDefault();
         }
 
-        
+
     }
 }

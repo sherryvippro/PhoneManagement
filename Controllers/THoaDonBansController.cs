@@ -35,7 +35,7 @@ namespace Admin.Controllers
             return View(
                 new InvoiceOutListViewModel
                 {
-                    InvoiceOut = _context.TChiTietHdbs.Include(t => t.SoHdbNavigation)
+                    InvoiceOut = _context.TChiTietHdbs.Include(t => t.SoHdbNavigation).Include(t => t.SoHdbNavigation.MaKhNavigation)
                     .Skip((invoiceOutPage - 1) * pageSize).Take(pageSize),
                     PagingInfo = new PagingInfo
                     {
@@ -45,6 +45,7 @@ namespace Admin.Controllers
                     }
                 }
             ); ;
+
         }
 
         // GET: THoaDonBans/Details/5

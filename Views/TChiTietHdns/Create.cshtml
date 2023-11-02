@@ -17,12 +17,12 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="SoHdn" class="control-label">Số hóa đơn</label>
-                    <input asp-for="SoHdn" class="form-control" />
-                    <span asp-validation-for="SoHdn" class="text-danger"></span>
+                    <select asp-for="SoHdn" class="form-control" asp-items="ViewBag.SoHDN"></select>
                 </div>
                 <div class="form-group">
                     <label asp-for="MaSp" class="control-label">Sản phẩm</label>
-                    <select asp-for="MaSp" class="form-control" asp-items="ViewBag.MaSp"></select>
+                    <input asp-for="MaSp" class="form-control" />
+                    <span asp-validation-for="MaSp" class="text-danger"></span>
                 </div>
 
 
@@ -54,8 +54,8 @@
 
 
 <div>
-    
-        @Html.ActionLink("Quay lại", "Index", "TChiTietHdns")
+
+    @Html.ActionLink("Quay lại", "Index", "TChiTietHdns", new { id = ViewBag.HDN})
 </div>
 
 @section Scripts {
