@@ -16,13 +16,13 @@ namespace Admin.Models
         {
         }
 
-        public virtual DbSet<TAdmin> TAdmins { get; set; } = null!;
+        public virtual DbSet<PhanQuyen> PhanQuyens { get; set; } = null!;
         public virtual DbSet<TChiTietHdb> TChiTietHdbs { get; set; } = null!;
         public virtual DbSet<TChiTietHdn> TChiTietHdns { get; set; } = null!;
         public virtual DbSet<THang> THangs { get; set; } = null!;
         public virtual DbSet<THoaDonBan> THoaDonBans { get; set; } = null!;
         public virtual DbSet<THoaDonNhap> THoaDonNhaps { get; set; } = null!;
-        public virtual DbSet<TKhachHang> TKhachHangs { get; set; } = null!;
+        public virtual DbSet<Nguoidung> Nguoidungs { get; set; } = null!;
         public virtual DbSet<TNhaCungCap> TNhaCungCaps { get; set; } = null!;
         public virtual DbSet<TSp> TSp { get; set; } = null!;
         public virtual DbSet<TTheLoai> TTheLoais { get; set; } = null!;
@@ -35,29 +35,27 @@ namespace Admin.Models
 
                 /*optionsBuilder.UseSqlServer("Data Source = DESKTOP-Q96SDP5\\SQLEXPRESS; Initial Catalog = QLBanDT; Persist Security Info = true; User ID = sa; Password = 123456;");*/
 
-                optionsBuilder.UseSqlServer("Data Source = DuongHang; Initial Catalog = QLBanDT; Persist Security Info = true; User ID = sa; Password = 123;");
+                optionsBuilder.UseSqlServer("Data Source = DESKTOP-HP034J7\\SQLEXPRESS; Initial Catalog = QLBanDT; Persist Security Info = true; User ID = sa; Password = 123;");
 
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<TAdmin>(entity =>
+            modelBuilder.Entity<PhanQuyen>(entity =>
             {
-                entity.HasKey(e => e.MaAdmin)
-                    .HasName("PK_tNhanVien");
+                entity.HasKey(e => e.IDQuyen)
+                    .HasName("PK_PhanQuyen");
 
-                entity.ToTable("tAdmin");
+                entity.ToTable("PhanQuyen");
 
-                entity.Property(e => e.MaAdmin).HasMaxLength(10);
+                entity.Property(e => e.IDQuyen).HasMaxLength(10);
 
-                entity.Property(e => e.PassWord)
+                
+
+                entity.Property(e => e.TenQuyen)
                     .HasMaxLength(50)
-                    .HasColumnName("passWord");
-
-                entity.Property(e => e.UserName)
-                    .HasMaxLength(50)
-                    .HasColumnName("userName");
+                    .HasColumnName("TenQuyen");
             });
 
             modelBuilder.Entity<TChiTietHdb>(entity =>
@@ -144,7 +142,7 @@ namespace Admin.Models
                     .HasMaxLength(10)
                     .HasColumnName("SoHDB");
 
-                entity.Property(e => e.MaKh)
+                entity.Property(e => e.MaNguoiDung)
                     .HasMaxLength(10)
                     .HasColumnName("MaKH");
 
@@ -154,10 +152,6 @@ namespace Admin.Models
                     .HasColumnType("money")
                     .HasColumnName("TongHDB");
 
-                entity.HasOne(d => d.MaKhNavigation)
-                    .WithMany(p => p.THoaDonBans)
-                    .HasForeignKey(d => d.MaKh)
-                    .HasConstraintName("FK_tHoaDonBan_tKhachHang");
 
             });
 
@@ -187,23 +181,23 @@ namespace Admin.Models
                     .HasConstraintName("FK_tHoaDonNhap_tNhaCungCap");
             });
 
-            modelBuilder.Entity<TKhachHang>(entity =>
+            modelBuilder.Entity<Nguoidung>(entity =>
             {
-                entity.HasKey(e => e.MaKh);
+                entity.HasKey(e => e.MaNguoiDung);
 
                 entity.ToTable("tKhachHang");
 
-                entity.Property(e => e.MaKh)
+                entity.Property(e => e.MaNguoiDung)
                     .HasMaxLength(10)
                     .HasColumnName("MaKH");
 
-                entity.Property(e => e.DiaChi).HasMaxLength(150);
+                entity.Property(e => e.Diachi).HasMaxLength(150);
 
-                entity.Property(e => e.DienThoai).HasMaxLength(15);
+                entity.Property(e => e.Dienthoai).HasMaxLength(15);
 
                 entity.Property(e => e.Email).HasMaxLength(50);
 
-                entity.Property(e => e.TenKh)
+                entity.Property(e => e.Hoten)
                     .HasMaxLength(50)
                     .HasColumnName("TenKH");
             });

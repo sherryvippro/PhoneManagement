@@ -12,10 +12,10 @@ namespace Admin.Models
 
         public string SoHdb { get; set; } = null!;
         public DateTime? NgayBan { get; set; }
-        public string? MaKh { get; set; }
+        public string? MaNguoiDung { get; set; }
         public decimal? TongHdb { get; set; }
 
-        public virtual TKhachHang? MaKhNavigation { get; set; }
+        public virtual Nguoidung? MaKhNavigation { get; set; }
         public virtual ICollection<TChiTietHdb> TChiTietHdbs { get; set; }
 
     }
